@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>妇女节祝福生成器 - Auto Tools</title>
+    <meta name="description" content="生成精美的妇女节祝福卡片，送给妈妈、老婆、女朋友、闺蜜...">
+    <style>
+        :root {
+            --primary: #ec4899;
+            --primary-dark: #db2777;
+            --bg: #fdf2f8;
+            --card: #ffffff;
+            --text: #1f2937;
+            --text-light: #6b7280;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        header h1 {
+            color: var(--primary);
+            font-size: 1.75rem;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(236, 72, 153, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #fce7f3;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .style-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .style-option {
+            aspect-ratio: 1;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .style-option:hover {
+            transform: scale(1.05);
+        }
+
+        .style-option.selected {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.3);
+        }
+
+        .style-1 { background: linear-gradient(135deg, #ec4899, #f9a8d4); }
+        .style-2 { background: linear-gradient(135deg, #8b5cf6, #c4b5fd); }
+        .style-3 { background: linear-gradient(135deg, #06b6d4, #67e8f9); }
+        .style-4 { background: linear-gradient(135deg, #f59e0b, #fcd34d); }
+        .style-5 { background: linear-gradient(135deg, #10b981, #6ee7b7); }
+        .style-6 { background: linear-gradient(135deg, #ef4444, #fca5a5); }
+        .style-7 { background: linear-gradient(135deg, #3b82f6, #93c5fd); }
+        .style-8 { background: linear-gradient(135deg, #6366f1, #a5b4fc); }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(236, 72, 153, 0.4);
+        }
+
+        .preview {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .preview.show {
+            display: block;
+        }
+
+        #resultCard {
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            min-height: 320px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #resultCard::before {
+            content: '🌸';
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            font-size: 2rem;
+            opacity: 0.8;
+        }
+
+        #resultCard::after {
+            content: '🌷';
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            opacity: 0.8;
+        }
+
+        .card-badge {
+            background: rgba(255,255,255,0.25);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 16px;
+            backdrop-filter: blur(4px);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .card-name {
+            font-size: 1.25rem;
+            margin-bottom: 16px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .card-message {
+            font-size: 1rem;
+            line-height: 1.6;
+            max-width: 280px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .card-date {
+            position: absolute;
+            bottom: 15px;
+            font-size: 0.75rem;
+            opacity: 0.9;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .btn-secondary {
+            flex: 1;
+            padding: 12px;
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .history {
+            margin-top: 20px;
+        }
+
+        .history h3 {
+            font-size: 1rem;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .history-item {
+            background: white;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .history-item:hover {
+            background: #fce7f3;
+        }
+
+        .sponsor-bar {
+            background: linear-gradient(135deg, #fdf2f8, #fce7f3);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .sponsor-bar p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+
+        .sponsor-btn {
+            display: inline-block;
+            padding: 8px 20px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌸 妇女节祝福生成器</h1>
+            <p>生成精美祝福卡片，送给最重要的她</p>
+        </header>
+
+        <div class="card">
+            <div class="form-group">
+                <label>祝福对象</label>
+                <select id="receiver">
+                    <option value="妈妈">妈妈</option>
+                    <option value="老婆">老婆</option>
+                    <option value="女朋友">女朋友</option>
+                    <option value="老婆">妻子</option>
+                    <option value="闺蜜">闺蜜</option>
+                    <option value="奶奶">奶奶</option>
+                    <option value="外婆">外婆</option>
+                    <option value="老师">老师</option>
+                    <option value="女同事">女同事</option>
+                    <option value="自定义">自定义...</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="customReceiverGroup" style="display:none;">
+                <label>自定义称呼</label>
+                <input type="text" id="customReceiver" placeholder="请输入称呼">
+            </div>
+
+            <div class="form-group">
+                <label>您的名字</label>
+                <input type="text" id="sender" placeholder="落款署名">
+            </div>
+
+            <div class="form-group">
+                <label>选择祝福语</label>
+                <select id="blessingType">
+                    <option value="0">妈妈，您辛苦了！我爱您！</option>
+                    <option value="1">感谢你一直以来的付出，爱你~</option>
+                    <option value="2">你是世界上最美的女人</option>
+                    <option value="3">愿你永远年轻快乐</option>
+                    <option value="4">女神节快乐！永远美丽！</option>
+                    <option value="5">为你送上最真挚的祝福</option>
+                    <option value="6">你是我的超级英雄</option>
+                    <option value="custom">自定义祝福语...</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="customBlessingGroup" style="display:none;">
+                <label>自定义祝福语</label>
+                <textarea id="customBlessing" rows="3" placeholder="请输入您的祝福语"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>选择卡片风格</label>
+                <div class="style-grid">
+                    <div class="style-option style-1 selected" data-style="1">浪漫粉</div>
+                    <div class="style-option style-2" data-style="2">甜蜜紫</div>
+                    <div class="style-option style-3" data-style="3">清新蓝</div>
+                    <div class="style-option style-4" data-style="4">温暖橙</div>
+                    <div class="style-option style-5" data-style="5">生机绿</div>
+                    <div class="style-option style-6" data-style="6">热情红</div>
+                    <div class="style-option style-7" data-style="7">海洋蓝</div>
+                    <div class="style-option style-8" data-style="8">梦幻紫</div>
+                </div>
+            </div>
+
+            <button class="btn" onclick="generateCard()">生成祝福卡片</button>
+        </div>
+
+        <div class="preview" id="preview">
+            <div class="card">
+                <div id="resultCard"></div>
+                <div class="actions">
+                    <button class="btn-secondary" onclick="downloadCard()">📥 下载图片</button>
+                    <button class="btn-secondary" onclick="copyCard()">📋 复制图片</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="history" id="historySection" style="display:none;">
+            <h3>历史记录</h3>
+            <div class="history-list" id="historyList"></div>
+        </div>
+
+        <div class="sponsor-bar">
+            <p>💖 喜欢这个工具？☕ 赞助一杯咖啡 支持我们！</p>
+            <a href="sponsor.html" class="sponsor-btn">支持我们</a>
+        </div>
+    </div>
+
+    <script>
+        let selectedStyle = 1;
+        const blessings = [
+            "妈妈，您辛苦了！<br>愿您永远健康快乐，<br>我爱您！❤️",
+            "感谢你一直以来的付出，<br>你是最温暖的存在，<br>爱你~ 💕",
+            "你是世界上最美的女人，<br>值得所有的美好，<br>女神节快乐！✨",
+            "愿你永远年轻快乐，<br>每一天都充满阳光，<br>幸福常相伴！🌸",
+            "女神节快乐！<br>愿你永远美丽动人，<br>生活甜蜜美满！💐",
+            "为你送上最真挚的祝福，<br>愿所有美好都属于你，<br>开心每一天！🎉",
+            "你是我的超级英雄，<br>无所不能的女神，<br>永远爱你！💪",
+            "世间美好与你环环相扣，<br>愿你被世界温柔以待，<br>永远幸福！🌺"
+        ];
+
+        const styleGradients = {
+            1: 'linear-gradient(135deg, #ec4899, #f9a8d4)',
+            2: 'linear-gradient(135deg, #8b5cf6, #c4b5fd)',
+            3: 'linear-gradient(135deg, #06b6d4, #67e8f9)',
+            4: 'linear-gradient(135deg, #f59e0b, #fcd34d)',
+            5: 'linear-gradient(135deg, #10b981, #6ee7b7)',
+            6: 'linear-gradient(135deg, #ef4444, #fca5a5)',
+            7: 'linear-gradient(135deg, #3b82f6, #93c5fd)',
+            8: 'linear-gradient(135deg, #6366f1, #a5b4fc)'
+        };
+
+        // 样式选择
+        document.querySelectorAll('.style-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.style-option').forEach(o => o.classList.remove('selected'));
+                option.classList.add('selected');
+                selectedStyle = parseInt(option.dataset.style);
+            });
+        });
+
+        // 祝福类型选择
+        document.getElementById('receiver').addEventListener('change', function() {
+            document.getElementById('customReceiverGroup').style.display =
+                this.value === '自定义' ? 'block' : 'none';
+        });
+
+        document.getElementById('blessingType').addEventListener('change', function() {
+            document.getElementById('customBlessingGroup').style.display =
+                this.value === 'custom' ? 'block' : 'none';
+        });
+
+        function getToday() {
+            const now = new Date();
+            return `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日`;
+        }
+
+        function generateCard() {
+            const receiverEl = document.getElementById('receiver');
+            const receiver = receiverEl.value === '自定义'
+                ? document.getElementById('customReceiver').value || '她'
+                : receiverEl.value;
+
+            const sender = document.getElementById('sender').value || '你';
+
+            const blessingType = document.getElementById('blessingType').value;
+            const blessing = blessingType === 'custom'
+                ? document.getElementById('customBlessing').value || '节日快乐！'
+                : blessings[parseInt(blessingType)];
+
+            const cardHtml = `
+                <div class="card-badge">🌸 妇女节快乐 🌸</div>
+                <div class="card-title">致 ${receiver}</div>
+                <div class="card-name">—— ${sender}</div>
+                <div class="card-message">${blessing}</div>
+                <div class="card-date">${getToday()}</div>
+            `;
+
+            const card = document.getElementById('resultCard');
+            card.style.background = styleGradients[selectedStyle];
+            card.innerHTML = cardHtml;
+
+            document.getElementById('preview').classList.add('show');
+
+            // 保存到历史
+            saveHistory(receiver, sender, blessing);
+        }
+
+        function saveHistory(receiver, sender, blessing) {
+            const history = JSON.parse(localStorage.getItem('womensDayHistory') || '[]');
+            const newItem = { receiver, sender, blessing: blessing.replace(/<br>/g, ' '), style: selectedStyle, time: Date.now() };
+            history.unshift(newItem);
+            if (history.length > 10) history.pop();
+            localStorage.setItem('womensDayHistory', JSON.stringify(history));
+            loadHistory();
+        }
+
+        function loadHistory() {
+            const history = JSON.parse(localStorage.getItem('womensDayHistory') || '[]');
+            const section = document.getElementById('historySection');
+            const list = document.getElementById('historyList');
+
+            if (history.length === 0) {
+                section.style.display = 'none';
+                return;
+            }
+
+            section.style.display = 'block';
+            list.innerHTML = history.map((item, i) => `
+                <div class="history-item" onclick="loadHistoryItem(${i})">
+                    送给 ${item.receiver} - ${item.sender}
+                </div>
+            `).join('');
+        }
+
+        function loadHistoryItem(index) {
+            const history = JSON.parse(localStorage.getItem('womensDayHistory') || '[]');
+            const item = history[index];
+            if (!item) return;
+
+            document.getElementById('receiver').value = '自定义';
+            document.getElementById('customReceiver').value = item.receiver;
+            document.getElementById('customReceiverGroup').style.display = 'block';
+            document.getElementById('sender').value = item.sender;
+            document.getElementById('blessingType').value = 'custom';
+            document.getElementById('customBlessing').value = item.blessing;
+            document.getElementById('customBlessingGroup').style.display = 'block';
+
+            selectedStyle = item.style;
+            document.querySelectorAll('.style-option').forEach(o => {
+                o.classList.toggle('selected', parseInt(o.dataset.style) === item.style);
+            });
+
+            generateCard();
+        }
+
+        async function downloadCard() {
+            const card = document.getElementById('resultCard');
+            try {
+                const canvas = await html2canvas(card, { scale: 2, backgroundColor: null });
+                const link = document.createElement('a');
+                link.download = `妇女节祝福_${Date.now()}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            } catch(e) {
+                alert('下载失败，请尝试复制图片');
+            }
+        }
+
+        async function copyCard() {
+            const card = document.getElementById('resultCard');
+            try {
+                const canvas = await html2canvas(card, { scale: 2, backgroundColor: null });
+                canvas.toBlob(async blob => {
+                    await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+                    alert('已复制到剪贴板！');
+                });
+            } catch(e) {
+                alert('复制失败，请手动截图');
+            }
+        }
+
+        // 加载历史
+        loadHistory();
+
+        // html2canvas
+        if (!window.html2canvas) {
+            const script = document.createElement('script');
+            script.src = 'https://html2canvas.hertzen.com/dist/html2canvas.min.js';
+            document.head.appendChild(script);
+        }
+    </script>
+</body>
+</html>
