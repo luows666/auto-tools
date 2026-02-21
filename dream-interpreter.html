@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>梦境解梦 - 看看你的梦预示着什么</title>
+    <meta name="description" content="输入你做的梦，解析梦境含义，探索潜意识的神秘世界">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌙</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            transition: background 0.5s;
+        }
+        .backgrounds {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            transition: opacity 0.5s;
+        }
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        .background.active {
+            opacity: 1;
+        }
+        .bg-1 { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); }
+        .bg-2 { background: linear-gradient(135deg, #2d1b69 0%, #11998e 100%); }
+        .bg-3 { background: linear-gradient(135deg, #ff6b6b 0%, #556270 100%); }
+        .bg-4 { background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%); }
+        .bg-5 { background: linear-gradient(135deg, #000428 0%, #004e92 100%); }
+        .bg-6 { background: linear-gradient(135deg, #1e130c 0%, #9a8478 100%); }
+        .bg-7 { background: linear-gradient(135deg, #355c7d 0%, #6c5b7b 50%, #c06c84 100%); }
+        .bg-8 { background: linear-gradient(135deg, #654ea3 0%, #eaafc8 100%); }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            color: #fff;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        .subtitle {
+            text-align: center;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+        }
+        .card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            font-family: inherit;
+        }
+        input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .style-select {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .style-option {
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+            font-size: 0.75rem;
+            color: #fff;
+        }
+        .style-option:hover {
+            transform: translateY(-2px);
+        }
+        .style-option.selected {
+            border-color: #fff;
+            transform: scale(1.05);
+        }
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 10px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102,126,234,0.4);
+        }
+        .btn-secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: #fff;
+        }
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(245,87,108,0.4);
+        }
+
+        .result-card {
+            display: none;
+            text-align: center;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dream-icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+        }
+        .dream-title {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .dream-meaning {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            text-align: left;
+            line-height: 1.8;
+            color: #444;
+        }
+        .luck-level {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin: 15px 0;
+        }
+        .luck-star {
+            font-size: 1.5rem;
+            color: #ddd;
+        }
+        .luck-star.active {
+            color: #ffd700;
+        }
+        .history {
+            margin-top: 20px;
+        }
+        .history-title {
+            color: #666;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+        .history-item {
+            background: rgba(255,255,255,0.9);
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .history-item:hover {
+            transform: translateX(5px);
+            background: #fff;
+        }
+        .history-dream {
+            color: #333;
+            font-size: 0.9rem;
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .history-time {
+            color: #999;
+            font-size: 0.75rem;
+            margin-left: 10px;
+        }
+        .clear-btn {
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-top: 10px;
+        }
+        .clear-btn:hover {
+            color: #f5576c;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .action-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        .btn-download {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: #fff;
+        }
+        .btn-copy {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: #fff;
+        }
+        .action-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .sponsor-toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1000;
+            cursor: pointer;
+        }
+        .sponsor-toast.show {
+            opacity: 1;
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 1.5rem; }
+            .card { padding: 20px; }
+            .style-select { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <div class="backgrounds">
+        <div class="background bg-1 active"></div>
+        <div class="background bg-2"></div>
+        <div class="background bg-3"></div>
+        <div class="background bg-4"></div>
+        <div class="background bg-5"></div>
+        <div class="background bg-6"></div>
+        <div class="background bg-7"></div>
+        <div class="background bg-8"></div>
+    </div>
+
+    <div class="container">
+        <h1>🌙 梦境解梦</h1>
+        <p class="subtitle">输入你做的梦，探索潜意识的神秘世界</p>
+
+        <div class="card">
+            <div class="input-group">
+                <label>输入你的梦境 👇</label>
+                <textarea id="dreamInput" placeholder="例如：梦见自己在大海里游泳，遇到一条大鲨鱼..."></textarea>
+            </div>
+
+            <div class="input-group">
+                <label>选择背景风格</label>
+                <div class="style-select" id="styleSelect">
+                    <div class="style-option bg-1 selected" data-bg="0">星空之夜</div>
+                    <div class="style-option bg-2" data-bg="1">梦幻紫霞</div>
+                    <div class="style-option bg-3" data-bg="2">夕阳余晖</div>
+                    <div class="style-option bg-4" data-bg="3">深海幽蓝</div>
+                    <div class="style-option bg-5" data-bg="4">午夜蓝调</div>
+                    <div class="style-option bg-6" data-bg="5">咖啡醇香</div>
+                    <div class="style-option bg-7" data-bg="6">甜蜜粉彩</div>
+                    <div class="style-option bg-8" data-bg="7">薰衣草田</div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="interpretDream()">🔮 解梦开始</button>
+        </div>
+
+        <div class="card result-card" id="resultCard">
+            <div class="dream-icon" id="dreamIcon">🌙</div>
+            <div class="dream-title" id="dreamTitle">梦境解析</div>
+            <div class="luck-level" id="luckLevel"></div>
+            <div class="dream-meaning" id="dreamMeaning"></div>
+            <div class="action-buttons">
+                <button class="action-btn btn-download" onclick="downloadImage()">📥 下载图片</button>
+                <button class="action-btn btn-copy" onclick="copyResult()">📋 复制结果</button>
+            </div>
+        </div>
+
+        <div class="history" id="historySection" style="display: none;">
+            <div class="history-title">📜 历史记录</div>
+            <div id="historyList"></div>
+            <button class="clear-btn" onclick="clearHistory()">清空历史</button>
+        </div>
+    </div>
+
+    <div class="sponsor-toast" id="sponsorToast" onclick="window.location.href='sponsor.html'">
+        💖 喜欢这个工具？☕ 赞助一杯咖啡 支持我们！
+    </div>
+
+    <script>
+        const dreamDatabase = {
+            '海': {
+                icon: '🌊',
+                title: '海洋梦境',
+                meanings: [
+                    '梦见在大海中游泳，代表你正在探索自己的情感世界。海水象征着情绪，平静的海面表示内心平和，汹涌的海浪则暗示近期情绪波动较大。',
+                    '梦见海边散步，预示着新的机遇即将来临。你正在为下一个人生阶段做准备，保持积极心态会收获惊喜。',
+                    '梦见海浪拍打岸边，象征着生活中的挑战即将到来，但你拥有足够的力量去面对。这是潜意识在给你加油打气！'
+                ],
+                luck: [true, true, true, false, false]
+            },
+            '鱼': {
+                icon: '🐟',
+                title: '鱼之梦境',
+                meanings: [
+                    '梦见鱼在水中自由游动，代表你对目前的生活状态感到满意。鱼象征着财富和机遇，近期可能会有意外收获！',
+                    '梦见抓到鱼，预示着努力即将得到回报。这是一个吉祥的梦境，代表着事业和感情都将有所斩获。',
+                    '梦见鱼跳出水面，象征着突破和成长。你已经准备好了迎接新的挑战，勇敢迈出第一步吧！'
+                ],
+                luck: [true, true, true, true, false]
+            },
+            '蛇': {
+                icon: '🐍',
+                title: '蛇境梦境',
+                meanings: [
+                    '梦见蛇通常与潜意识有关。蛇象征着智慧和转变，可能代表你正在经历某种内在的蜕变过程。',
+                    '梦见毒蛇，可能暗示你需要警惕身边的小人或潜在的危机。保持谨慎，但不必过度担忧。',
+                    '梦见蛇蜕皮，象征着重生和新的开始。过去的不愉快正在离你而去，美好即将到来。'
+                ],
+                luck: [false, false, true, true, true]
+            },
+            '飞': {
+                icon: '🕊️',
+                title: '飞翔梦境',
+                meanings: [
+                    '梦见自己飞翔，象征着自由和超越。你渴望突破目前的困境，拥有更高的视野和更广阔的发展空间。',
+                    '梦见飞得很高，代表你有远大的理想和抱负。近期可能会遇到实现梦想的机会。',
+                    '梦见飞行时看到美丽的风景，预示着美好的未来在等着你。保持乐观积极的心态，好运即将降临。'
+                ],
+                luck: [true, true, true, true, true]
+            },
+            '车': {
+                icon: '🚗',
+                title: '车辆梦境',
+                meanings: [
+                    '梦见自己开车，代表你掌控着自己的人生方向。你有明确的目标，并正在稳步前进。',
+                    '梦见坐车，预示着你正在接受他人的帮助或指引。注意选择值得信赖的伙伴同行。',
+                    '梦见车祸，是一个警示梦，提醒你要更加小心谨慎。放慢脚步，三思而后行。'
+                ],
+                luck: [true, false, true, false, true]
+            },
+            '家': {
+                icon: '🏠',
+                title: '家居梦境',
+                meanings: [
+                    '梦见自己的家，象征着你的内心世界。家的状态反映了你当前的心理状态。',
+                    '梦见装修房子，预示着生活将有新的改变。你正在为未来做准备，这是成长的信号。',
+                    '梦见回家，代表你对安全和归属感的渴望。可能近期需要更多来自家人和朋友的支持。'
+                ],
+                luck: [true, true, false, true, true]
+            },
+            '钱': {
+                icon: '💰',
+                title: '财富梦境',
+                meanings: [
+                    '梦见捡钱，代表你迎来好运即将。近期可能会有意外之财或好事发生。',
+                    '梦见丢钱，提醒你要更加珍惜现有的资源。近期可能会有小的损失，但不必过于担忧。',
+                    '梦见数钱，象征着对财富的渴望和追求。你的努力终将得到回报，保持信心！'
+                ],
+                luck: [true, true, false, true, false]
+            },
+            '考试': {
+                icon: '📝',
+                title: '考试梦境',
+                meanings: [
+                    '梦见考试，通常与现实中的压力和焦虑有关。这可能是潜意识在提醒你做好准备。',
+                    '梦见考试通过，代表你的努力得到认可。近期可能会有好的结果传来，恭喜你！',
+                    '梦见考试不及格，不要过于担心。这可能只是潜意识在提醒你还有进步空间，继续努力！'
+                ],
+                luck: [true, true, false, true, true]
+            },
+            '死亡': {
+                icon: '🦋',
+                title: '蜕变梦境',
+                meanings: [
+                    '梦见死亡并不一定是坏事，它通常象征着结束和新的开始。你正在告别过去的自己，迎接新生。',
+                    '梦见自己死亡，代表你想要摆脱现状，获得重生。这是一个内心渴望改变的信号。',
+                    '梦见亲人去世，预示着他们将获得长寿。无需过度担忧，这是一个吉祥的预兆。'
+                ],
+                luck: [true, true, true, false, false]
+            },
+            '动物': {
+                icon: '🦌',
+                title: '动物梦境',
+                meanings: [
+                    '梦见野生动物，代表你内心的野性和自由。你渴望摆脱束缚，过更真实的生活。',
+                    '梦见宠物，象征着陪伴和忠诚。你需要更多的情感支持，或者你正拥有着珍贵的友谊。',
+                    '梦见动物攻击你，可能代表你感受到来自外界的压力或威胁。学会保护自己，但不要过度防御。'
+                ],
+                luck: [true, false, true, true, false]
+            },
+            '雨': {
+                icon: '🌧️',
+                title: '雨境梦境',
+                meanings: [
+                    '梦见下雨，通常与情绪有关。细雨代表温柔的情感，暴雨则暗示激烈的情绪波动。',
+                    '梦见在雨中漫步，预示着浪漫的邂逅即将发生。单身的朋友准备好迎接爱情吧！',
+                    '梦见雨过天晴，象征着困难即将过去，美好的日子即将到来。坚持就是胜利！'
+                ],
+                luck: [false, true, true, false, true]
+            },
+            '花': {
+                icon: '🌸',
+                title: '花园梦境',
+                meanings: [
+                    '梦见花开，代表美好即将绽放。你的努力即将得到回报，期待惊喜的到来吧！',
+                    '梦见花束，象征着爱情和浪漫。近期可能会有美好的事情发生，值得期待。',
+                    '梦见枯萎的花，提醒你要更加珍惜。不要等到失去才懂得宝贵，现在就行动吧！'
+                ],
+                luck: [true, true, true, false, true]
+            },
+            '山': {
+                icon: '⛰️',
+                title: '高山梦境',
+                meanings: [
+                    '梦见爬山，代表你正在努力追求目标。过程可能艰难，但坚持就是胜利！',
+                    '梦见登上山顶，象征着成功和成就。你已经克服了困难，即将迎来巅峰时刻！',
+                    '梦见下山，可能代表你正在从高峰回落。调整好心态，休息是为了更好地出发。'
+                ],
+                luck: [true, true, true, true, false]
+            },
+            '火': {
+                icon: '🔥',
+                title: '火焰梦境',
+                meanings: [
+                    '梦见火灾，通常与情绪的爆发有关。可能是在提醒你注意控制情绪，避免冲动。',
+                    '梦见篝火晚会，象征着欢乐和团聚。你需要更多这样的美好时光，和朋友家人相聚吧！',
+                    '梦见蜡烛，代表希望和温暖。黑暗中的光亮象征着指引，照亮你前进的道路。'
+                ],
+                luck: [false, true, false, true, true]
+            },
+            '食物': {
+                icon: '🍜',
+                title: '美食梦境',
+                meanings: [
+                    '梦见美食，代表你的欲望和需求。这可能是身体在提醒你补充能量，或者心灵需要滋养。',
+                    '梦见自己做饭，象征着创造力和掌控力。你有能力照顾好自己，创造美好的生活。',
+                    '梦见没吃饱，可能代表某种匮乏感。学会满足，珍惜当下拥有的一切。'
+                ],
+                luck: [true, true, false, true, true]
+            }
+        };
+
+        const fallbackDream = {
+            icon: '✨',
+            title: '神秘梦境',
+            meanings: [
+                '这个梦境充满了神秘色彩。你的潜意识可能在传递某种特殊的信息，需要你细细体会。',
+                '梦境是潜意识的语言，虽然细节模糊，但请相信这代表着你内心深处的某种渴望或警示。',
+                '每个梦境都有其意义，即使细节已经模糊。重要的是你记住了这个梦，这本身就是一种启示。'
+            ],
+            luck: [true, true, false, true, false]
+        };
+
+        let currentResult = {};
+        let selectedBg = 0;
+
+        // 初始化
+        document.querySelectorAll('.style-option').forEach(opt => {
+            opt.addEventListener('click', function() {
+                document.querySelectorAll('.style-option').forEach(o => o.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedBg = parseInt(this.dataset.bg);
+                updateBackground(selectedBg);
+            });
+        });
+
+        function updateBackground(index) {
+            document.querySelectorAll('.background').forEach((bg, i) => {
+                bg.classList.toggle('active', i === index);
+            });
+        }
+
+        function interpretDream() {
+            const dream = document.getElementById('dreamInput').value.trim();
+            if (!dream) {
+                alert('请输入你的梦境内容');
+                return;
+            }
+
+            // 保存到历史记录
+            saveHistory(dream);
+
+            // 解析梦境
+            let result = fallbackDream;
+            let key = '';
+
+            for (const [k, v] of Object.entries(dreamDatabase)) {
+                if (dream.includes(k)) {
+                    result = v;
+                    key = k;
+                    break;
+                }
+            }
+
+            // 随机选择解读
+            const meaning = result.meanings[Math.floor(Math.random() * result.meanings.length)];
+            const luckCount = result.luck.filter(l => l).length;
+
+            currentResult = {
+                icon: result.icon,
+                title: result.title,
+                meaning: meaning,
+                luckCount: luckCount,
+                dream: dream,
+                bg: selectedBg
+            };
+
+            // 显示结果
+            document.getElementById('dreamIcon').textContent = result.icon;
+            document.getElementById('dreamTitle').textContent = result.title;
+            document.getElementById('dreamMeaning').textContent = meaning;
+
+            let starsHtml = '';
+            for (let i = 0; i < 5; i++) {
+                starsHtml += `<span class="luck-star ${i < luckCount ? 'active' : ''}">⭐</span>`;
+            }
+            document.getElementById('luckLevel').innerHTML = starsHtml;
+
+            document.getElementById('resultCard').style.display = 'block';
+
+            // 显示赞助提示
+            setTimeout(() => {
+                const toast = document.getElementById('sponsorToast');
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 5000);
+            }, 3000);
+        }
+
+        function saveHistory(dream) {
+            let history = JSON.parse(localStorage.getItem('dreamHistory') || '[]');
+            const today = new Date().toLocaleDateString('zh-CN');
+            history.unshift({ dream: dream.substring(0, 50), time: today });
+            history = history.slice(0, 10);
+            localStorage.setItem('dreamHistory', JSON.stringify(history));
+            renderHistory();
+        }
+
+        function renderHistory() {
+            const history = JSON.parse(localStorage.getItem('dreamHistory') || '[]');
+            const historySection = document.getElementById('historySection');
+            const historyList = document.getElementById('historyList');
+
+            if (history.length === 0) {
+                historySection.style.display = 'none';
+                return;
+            }
+
+            historySection.style.display = 'block';
+            historyList.innerHTML = history.map((item, index) => `
+                <div class="history-item" onclick="loadHistory(${index})">
+                    <span class="history-dream">${item.dream}</span>
+                    <span class="history-time">${item.time}</span>
+                </div>
+            `).join('');
+        }
+
+        function loadHistory(index) {
+            const history = JSON.parse(localStorage.getItem('dreamHistory') || '[]');
+            if (history[index]) {
+                document.getElementById('dreamInput').value = history[index].dream;
+                interpretDream();
+            }
+        }
+
+        function clearHistory() {
+            localStorage.removeItem('dreamHistory');
+            renderHistory();
+        }
+
+        function downloadImage() {
+            alert('📥 图片下载功能开发中敬请期待！');
+        }
+
+        function copyResult() {
+            const text = `🌙 我的梦境：${currentResult.dream}\n\n${currentResult.icon} ${currentResult.title}\n\n${currentResult.meaning}\n\n⭐ 幸运指数：${currentResult.luckCount}/5\n\n——来自梦境解梦小程序`;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('📋 已复制到剪贴板！快分享给朋友吧~');
+            });
+        }
+
+        // 页面加载时显示历史
+        renderHistory();
+    </script>
+</body>
+</html>

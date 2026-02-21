@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>晚安卡片生成器 - 温馨问候</title>
+    <meta name="description" content="生成精美的晚安问候卡片，一键保存图片分享到朋友圈">
+    <meta name="keywords" content="晚安,问候卡片,晚上好,朋友圈,分享,睡前">
+    <style>
+        :root {
+            --primary: #7c3aed;
+            --primary-dark: #6d28d9;
+            --bg: #faf5ff;
+            --card: #ffffff;
+            --text: #1f2937;
+            --text-light: #6b7280;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.875rem;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-bottom: 16px;
+            font-family: inherit;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .template-btn {
+            padding: 10px 8px;
+            border: 2px solid #e5e7eb;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 0.75rem;
+            transition: all 0.2s;
+        }
+
+        .template-btn:hover {
+            border-color: var(--primary);
+        }
+
+        .template-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .style-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .style-btn {
+            height: 40px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .style-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .style-btn.active {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.3);
+        }
+
+        .style-1 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .style-2 { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .style-3 { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .style-4 { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+        .style-5 { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        .style-6 { background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); }
+        .style-7 { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); }
+        .style-8 { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background: #e5e7eb;
+            color: var(--text);
+        }
+
+        .btn-secondary:hover {
+            background: #d1d5db;
+        }
+
+        #preview {
+            margin-top: 20px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        #preview-canvas {
+            width: 100%;
+            display: block;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .actions .btn {
+            flex: 1;
+        }
+
+        .history {
+            margin-top: 20px;
+        }
+
+        .history h3 {
+            font-size: 1rem;
+            margin-bottom: 12px;
+            color: var(--text);
+        }
+
+        .history-item {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid #e5e7eb;
+        }
+
+        .history-item:hover {
+            border-color: var(--primary);
+        }
+
+        .history-item .date {
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        .history-item .content {
+            font-size: 0.875rem;
+            margin-top: 4px;
+        }
+
+        .floating-support {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .support-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 20px;
+            background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+            text-decoration: none;
+        }
+
+        .support-btn:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌙 晚安卡片</h1>
+        <p class="subtitle">生成温馨晚安问候，一键分享到朋友圈</p>
+
+        <div class="card">
+            <label>你的昵称</label>
+            <input type="text" id="nickname" placeholder="输入你的昵称" maxlength="20">
+
+            <label>选择问候语</label>
+            <div class="template-grid" id="templateGrid"></div>
+
+            <label>选择背景风格</label>
+            <div class="style-grid" id="styleGrid"></div>
+
+            <button class="btn btn-primary" onclick="generateCard()">生成晚安卡片</button>
+        </div>
+
+        <div id="preview" style="display: none;">
+            <canvas id="preview-canvas" width="400" height="600"></canvas>
+            <div class="actions">
+                <button class="btn btn-primary" onclick="downloadCard()">📥 下载图片</button>
+                <button class="btn btn-secondary" onclick="copyCard()">📋 复制到剪贴板</button>
+            </div>
+        </div>
+
+        <div class="history" id="history"></div>
+    </div>
+
+    <div class="floating-support">
+        <a href="sponsor.html" target="_blank" class="support-btn">☕ 支持我们</a>
+    </div>
+
+    <script>
+        const templates = [
+            { text: "晚安，世界。明天见~", emoji: "🌙" },
+            { text: "好梦常在，醒来便是晴天", emoji: "💫" },
+            { text: "星星为你照亮夜晚的路", emoji: "⭐" },
+            { text: "今天的辛苦到此为止，明日重新出发", emoji: "🌟" },
+            { text: "愿你的梦里全是美好", emoji: "✨" },
+            { text: "放下一天的疲惫，好梦", emoji: "💤" },
+            { text: "你是最棒的，晚安", emoji: "💖" },
+            { text: "明天会更好，晚安朋友", emoji: "🌈" }
+        ];
+
+        const styles = [
+            'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+            'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+            'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+            'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+            'linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)',
+            'linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)',
+            'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)'
+        ];
+
+        let selectedTemplate = 0;
+        let selectedStyle = 0;
+
+        function init() {
+            renderTemplates();
+            renderStyles();
+            loadHistory();
+        }
+
+        function renderTemplates() {
+            const grid = document.getElementById('templateGrid');
+            grid.innerHTML = templates.map((t, i) => `
+                <div class="template-btn ${i === selectedTemplate ? 'active' : ''}" onclick="selectTemplate(${i})">
+                    ${t.emoji} ${t.text.substring(0, 12)}...
+                </div>
+            `).join('');
+        }
+
+        function renderStyles() {
+            const grid = document.getElementById('styleGrid');
+            grid.innerHTML = styles.map((s, i) => `
+                <div class="style-btn style-${i + 1} ${i === selectedStyle ? 'active' : ''}" onclick="selectStyle(${i})"></div>
+            `).join('');
+        }
+
+        function selectTemplate(index) {
+            selectedTemplate = index;
+            renderTemplates();
+        }
+
+        function selectStyle(index) {
+            selectedStyle = index;
+            renderStyles();
+        }
+
+        function generateCard() {
+            const nickname = document.getElementById('nickname').value.trim() || '朋友';
+            const canvas = document.getElementById('preview-canvas');
+            const ctx = canvas.getContext('2d');
+
+            // Draw background
+            const gradient = ctx.createLinearGradient(0, 0, 400, 600);
+            const style = styles[selectedStyle];
+            const colors = style.match(/#[a-fA-F0-9]{6}/g);
+            if (colors && colors.length >= 2) {
+                gradient.addColorStop(0, colors[0]);
+                gradient.addColorStop(1, colors[1]);
+            } else {
+                gradient.addColorStop(0, '#667eea');
+                gradient.addColorStop(1, '#764ba2');
+            }
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 400, 600);
+
+            // Draw stars
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+            for (let i = 0; i < 30; i++) {
+                const x = Math.random() * 400;
+                const y = Math.random() * 400;
+                const size = Math.random() * 2 + 1;
+                ctx.beginPath();
+                ctx.arc(x, y, size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // Draw moon
+            ctx.fillStyle = '#fff';
+            ctx.shadowColor = 'rgba(255, 255, 255, 0.5)';
+            ctx.shadowBlur = 20;
+            ctx.beginPath();
+            ctx.arc(320, 80, 40, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.shadowBlur = 0;
+
+            // Draw title
+            ctx.fillStyle = '#fff';
+            ctx.font = 'bold 36px -apple-system, BlinkMacSystemFont, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('晚安', 200, 120);
+
+            // Draw greeting
+            ctx.font = '20px -apple-system, BlinkMacSystemFont, sans-serif';
+            ctx.fillText(templates[selectedTemplate].text, 200, 180);
+
+            // Draw nickname
+            ctx.font = 'bold 28px -apple-system, BlinkMacSystemFont, sans-serif';
+            ctx.fillText(`—— ${nickname}`, 200, 240);
+
+            // Draw bottom decoration
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+            ctx.beginPath();
+            ctx.moveTo(0, 600);
+            ctx.quadraticCurveTo(200, 500, 400, 600);
+            ctx.lineTo(400, 600);
+            ctx.lineTo(0, 600);
+            ctx.fill();
+
+            // Draw current time
+            const now = new Date();
+            const timeStr = now.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+            ctx.font = '14px -apple-system, BlinkMacSystemFont, sans-serif';
+            ctx.fillText(timeStr, 200, 560);
+
+            document.getElementById('preview').style.display = 'block';
+
+            // Save to history
+            saveHistory(nickname, templates[selectedTemplate].text);
+        }
+
+        function downloadCard() {
+            const canvas = document.getElementById('preview-canvas');
+            const link = document.createElement('a');
+            link.download = `晚安卡片_${Date.now()}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        async function copyCard() {
+            const canvas = document.getElementById('preview-canvas');
+            try {
+                const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+                await navigator.clipboard.write([
+                    new ClipboardItem({ 'image/png': blob })
+                ]);
+                alert('已复制到剪贴板！');
+            } catch (err) {
+                alert('复制失败，请手动保存图片');
+            }
+        }
+
+        function saveHistory(nickname, text) {
+            let history = JSON.parse(localStorage.getItem('goodnight_history') || '[]');
+            history.unshift({ nickname, text, time: new Date().toISOString() });
+            history = history.slice(0, 10);
+            localStorage.setItem('goodnight_history', JSON.stringify(history));
+            loadHistory();
+        }
+
+        function loadHistory() {
+            const history = JSON.parse(localStorage.getItem('goodnight_history') || '[]');
+            const container = document.getElementById('history');
+
+            if (history.length === 0) {
+                container.innerHTML = '';
+                return;
+            }
+
+            container.innerHTML = `
+                <h3>历史记录</h3>
+                ${history.map(h => `
+                    <div class="history-item" onclick="restoreHistory('${h.nickname}', '${h.text}')">
+                        <div class="date">${new Date(h.time).toLocaleString('zh-CN')}</div>
+                        <div class="content">${h.nickname}: ${h.text}</div>
+                    </div>
+                `).join('')}
+            `;
+        }
+
+        function restoreHistory(nickname, text) {
+            document.getElementById('nickname').value = nickname;
+            const idx = templates.findIndex(t => t.text === text);
+            if (idx >= 0) {
+                selectedTemplate = idx;
+                renderTemplates();
+            }
+            generateCard();
+        }
+
+        init();
+    </script>
+</body>
+</html>
