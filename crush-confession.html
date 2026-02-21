@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>暗恋表白生成器 - Auto Tools</title>
+    <meta name="description" content="生成精美暗恋表白卡片，测试你们的缘分配对，一键分享朋友圈。">
+    <meta name="keywords" content="暗恋,表白,表白生成器,恋爱测试,缘分配对,朋友圈">
+    <style>
+        :root {
+            --primary: #e91e63;
+            --primary-dark: #c2185b;
+            --bg: #fdf2f8;
+            --card: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --pink: #fce4ec;
+            --rose: #f8bbd9;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(180deg, #fff0f5 0%, var(--bg) 100%);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 20px;
+            padding-bottom: 100px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 1.5rem;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.875rem;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            margin-bottom: 16px;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(233, 30, 99, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: var(--text);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .btn-group button {
+            flex: 1;
+        }
+
+        /* Preview Card */
+        .preview-section {
+            margin-top: 20px;
+        }
+
+        .preview-card {
+            width: 100%;
+            aspect-ratio: 4/5;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+        }
+
+        .preview-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 60%);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+            50% { transform: translate(-50%, -50%) rotate(180deg); }
+        }
+
+        .heart-decoration {
+            font-size: 60px;
+            margin-bottom: 20px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .match-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .names {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            text-align: center;
+            color: #555;
+        }
+
+        .match-percent {
+            font-size: 4rem;
+            font-weight: bold;
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .match-result {
+            font-size: 1rem;
+            text-align: center;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 20px;
+            margin-top: 10px;
+        }
+
+        .date-display {
+            position: absolute;
+            bottom: 15px;
+            font-size: 0.75rem;
+            opacity: 0.8;
+        }
+
+        /* Style options */
+        .style-options {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .style-option {
+            aspect-ratio: 1;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .style-option:hover {
+            transform: scale(1.05);
+        }
+
+        .style-option.active {
+            border-color: var(--primary);
+        }
+
+        /* Color styles */
+        .style-1 { background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%); }
+        .style-2 { background: linear-gradient(135deg, #f8bbd9 0%, #f48fb1 100%); }
+        .style-3 { background: linear-gradient(135deg, #ce93d8 0%, #ba68c8 100%); }
+        .style-4 { background: linear-gradient(135deg, #b3e5fc 0%, #4fc3f7 100%); }
+        .style-5 { background: linear-gradient(135deg, #fff9c4 0%, #fff176 100%); }
+        .style-6 { background: linear-gradient(135deg, #c8e6c9 0%, #81c784 100%); }
+        .style-7 { background: linear-gradient(135deg, #ffccbc 0%, #ff8a65 100%); }
+        .style-8 { background: linear-gradient(135deg, #e1bee7 0%, #ba68c8 100%); }
+
+        /* History */
+        .history-section {
+            margin-top: 20px;
+        }
+
+        .history-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text);
+        }
+
+        .history-item {
+            background: white;
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            border: 1px solid #e2e8f0;
+        }
+
+        .history-item:hover {
+            transform: translateX(4px);
+        }
+
+        .history-names {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .history-result {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .clear-btn {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.85rem;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .clear-btn:hover {
+            color: var(--primary);
+        }
+
+        /* Hidden canvas for export */
+        #exportCanvas {
+            display: none;
+        }
+
+        /* Floating button */
+        .floating-sponsor {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a5a);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+            cursor: pointer;
+            font-weight: 600;
+            z-index: 100;
+            transition: transform 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .floating-sponsor:hover {
+            transform: scale(1.05);
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        /* Mobile */
+        @media (max-width: 480px) {
+            .container { padding: 0; }
+            .card { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💕 暗恋表白生成器</h1>
+        <p class="subtitle">输入你们的名字，生成专属表白卡片</p>
+
+        <div class="card">
+            <label>你的名字</label>
+            <input type="text" id="yourName" placeholder="请输入你的名字" maxlength="20">
+
+            <label>TA的名字</label>
+            <input type="text" id="crushName" placeholder="请输入TA的名字" maxlength="20">
+
+            <label>选择卡片风格</label>
+            <div class="style-options">
+                <div class="style-option style-1 active" data-style="1"></div>
+                <div class="style-option style-2" data-style="2"></div>
+                <div class="style-option style-3" data-style="3"></div>
+                <div class="style-option style-4" data-style="4"></div>
+                <div class="style-option style-5" data-style="5"></div>
+                <div class="style-option style-6" data-style="6"></div>
+                <div class="style-option style-7" data-style="7"></div>
+                <div class="style-option style-8" data-style="8"></div>
+            </div>
+
+            <button class="btn-primary" onclick="generateCard()">生成表白卡片</button>
+        </div>
+
+        <div class="preview-section" id="previewSection" style="display: none;">
+            <div class="preview-card" id="previewCard">
+                <div class="heart-decoration">💕</div>
+                <div class="match-title" id="cardTitle">暗恋指数</div>
+                <div class="names" id="cardNames">你 · TA</div>
+                <div class="match-percent" id="cardPercent">87%</div>
+                <div class="match-result" id="cardResult">天赐良缘，表白成功率极高！</div>
+                <div class="date-display" id="cardDate">2026年2月21日</div>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn-secondary" onclick="downloadCard()">📥 下载图片</button>
+                <button class="btn-secondary" onclick="copyCard()">📋 复制卡片</button>
+            </div>
+        </div>
+
+        <div class="history-section" id="historySection" style="display: none;">
+            <div class="history-title">📜 历史记录</div>
+            <div id="historyList"></div>
+            <div class="clear-btn" onclick="clearHistory()">清空历史</div>
+        </div>
+    </div>
+
+    <a href="sponsor.html" class="floating-sponsor">☕ 支持我们</a>
+    <div class="toast" id="toast"></div>
+    <canvas id="exportCanvas"></canvas>
+
+    <script>
+        let currentStyle = 1;
+        let currentData = null;
+
+        const styleGradients = {
+            1: 'linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%)',
+            2: 'linear-gradient(135deg, #f8bbd9 0%, #f48fb1 100%)',
+            3: 'linear-gradient(135deg, #ce93d8 0%, #ba68c8 100%)',
+            4: 'linear-gradient(135deg, #b3e5fc 0%, #4fc3f7 100%)',
+            5: 'linear-gradient(135deg, #fff9c4 0%, #fff176 100%)',
+            6: 'linear-gradient(135deg, #c8e6c9 0%, #81c784 100%)',
+            7: 'linear-gradient(135deg, #ffccbc 0%, #ff8a65 100%)',
+            8: 'linear-gradient(135deg, #e1bee7 0%, #ba68c8 100%)'
+        };
+
+        const matchResults = [
+            '天赐良缘，表白成功率极高！',
+            '心意相通，就差你主动一步！',
+            '缘分不浅，继续努力加深了解！',
+            '有戏！TA对你印象还不错哦～',
+            '暗恋指数中等，建议先从朋友做起～',
+            '需要加油！多创造相处机会～',
+            '革命尚未成功，同志仍需努力！',
+            '建议换个目标，也许更适合你～'
+        ];
+
+        // Style selection
+        document.querySelectorAll('.style-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.style-option').forEach(o => o.classList.remove('active'));
+                option.classList.add('active');
+                currentStyle = parseInt(option.dataset.style);
+                if (currentData) {
+                    updateCardDisplay();
+                }
+            });
+        });
+
+        function calculateMatch(name1, name2) {
+            const combined = (name1 + name2).toLowerCase();
+            let hash = 0;
+            for (let i = 0; i < combined.length; i++) {
+                hash = ((hash << 5) - hash) + combined.charCodeAt(i);
+                hash = hash & hash;
+            }
+            const basePercent = Math.abs(hash % 40) + 60;
+            const dateHash = new Date().toDateString().split('').reduce((a, b) => a + b.charCodeAt(0), 0);
+            return (basePercent + (dateHash % 20)) % 101;
+        }
+
+        function generateCard() {
+            const yourName = document.getElementById('yourName').value.trim();
+            const crushName = document.getElementById('crushName').value.trim();
+
+            if (!yourName || !crushName) {
+                showToast('请输入你们两个人的名字');
+                return;
+            }
+
+            const matchPercent = calculateMatch(yourName, crushName);
+            const resultIndex = matchPercent >= 90 ? 0 :
+                               matchPercent >= 80 ? 1 :
+                               matchPercent >= 70 ? 2 :
+                               matchPercent >= 60 ? 3 :
+                               matchPercent >= 50 ? 4 :
+                               matchPercent >= 40 ? 5 : 6;
+
+            const today = new Date();
+            const dateStr = `${today.getFullYear()}年${today.getMonth() + 1}月${today.getDate()}日`;
+
+            currentData = {
+                yourName,
+                crushName,
+                matchPercent,
+                result: matchResults[resultIndex],
+                style: currentStyle,
+                date: dateStr
+            };
+
+            updateCardDisplay();
+            document.getElementById('previewSection').style.display = 'block';
+            saveToHistory();
+        }
+
+        function updateCardDisplay() {
+            if (!currentData) return;
+
+            const card = document.getElementById('previewCard');
+            card.style.background = styleGradients[currentData.style];
+
+            document.getElementById('cardNames').textContent = `${currentData.yourName} · ${currentData.crushName}`;
+            document.getElementById('cardPercent').textContent = `${currentData.matchPercent}%`;
+            document.getElementById('cardResult').textContent = currentData.result;
+            document.getElementById('cardDate').textContent = currentData.date;
+        }
+
+        function saveToHistory() {
+            if (!currentData) return;
+
+            let history = JSON.parse(localStorage.getItem('crushHistory') || '[]');
+            history.unshift(currentData);
+            history = history.slice(0, 10);
+            localStorage.setItem('crushHistory', JSON.stringify(history));
+            renderHistory();
+        }
+
+        function renderHistory() {
+            const history = JSON.parse(localStorage.getItem('crushHistory') || '[]');
+            if (history.length === 0) {
+                document.getElementById('historySection').style.display = 'none';
+                return;
+            }
+
+            document.getElementById('historySection').style.display = 'block';
+            const list = document.getElementById('historyList');
+            list.innerHTML = history.map((item, index) => `
+                <div class="history-item" onclick="loadHistory(${index})">
+                    <div class="history-names">${item.yourName} · ${item.crushName}</div>
+                    <div class="history-result">${item.matchPercent}% · ${item.date}</div>
+                </div>
+            `).join('');
+        }
+
+        function loadHistory(index) {
+            const history = JSON.parse(localStorage.getItem('crushHistory') || '[]');
+            const item = history[index];
+            if (!item) return;
+
+            currentData = item;
+            currentStyle = item.style;
+            document.getElementById('yourName').value = item.yourName;
+            document.getElementById('crushName').value = item.crushName;
+
+            document.querySelectorAll('.style-option').forEach(o => o.classList.remove('active'));
+            document.querySelector(`[data-style="${item.style}"]`).classList.add('active');
+
+            updateCardDisplay();
+            document.getElementById('previewSection').style.display = 'block';
+        }
+
+        function clearHistory() {
+            localStorage.removeItem('crushHistory');
+            document.getElementById('historySection').style.display = 'none';
+        }
+
+        function downloadCard() {
+            if (!currentData) return;
+
+            const canvas = document.getElementById('exportCanvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 400;
+            canvas.height = 500;
+
+            // Background
+            const gradient = ctx.createLinearGradient(0, 0, 400, 500);
+            const colors = {
+                1: ['#ff6b6b', '#ee5a5a'],
+                2: ['#f8bbd9', '#f48fb1'],
+                3: ['#ce93d8', '#ba68c8'],
+                4: ['#b3e5fc', '#4fc3f7'],
+                5: ['#fff9c4', '#fff176'],
+                6: ['#c8e6c9', '#81c784'],
+                7: ['#ffccbc', '#ff8a65'],
+                8: ['#e1bee7', '#ba68c8']
+            };
+            gradient.addColorStop(0, colors[currentData.style][0]);
+            gradient.addColorStop(1, colors[currentData.style][1]);
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 400, 500);
+
+            // Heart
+            ctx.font = '50px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('💕', 200, 80);
+
+            // Title
+            ctx.font = 'bold 24px -apple-system, BlinkMacSystemFont, sans-serif';
+            ctx.fillStyle = '#333';
+            ctx.fillText('暗恋指数', 200, 130);
+
+            // Names
+            ctx.font = '18px -apple-system, BlinkMacSystemFont, sans-serif';
+            ctx.fillStyle = '#555';
+            ctx.fillText(`${currentData.yourName} · ${currentData.crushName}`, 200, 165);
+
+            // Percent
+            ctx.font = 'bold 72px -apple-system, BlinkMacSystemFont, sans-serif';
+            ctx.fillStyle = '#fff';
+            ctx.shadowColor = 'rgba(0,0,0,0.2)';
+            ctx.shadowBlur = 4;
+            ctx.shadowOffsetX = 2;
+            ctx.shadowOffsetY = 2;
+            ctx.fillText(`${currentData.matchPercent}%`, 200, 260);
+
+            // Result
+            ctx.shadowBlur = 0;
+            ctx.font = '16px -apple-system, BlinkMacSystemFont, sans-serif';
+            ctx.fillStyle = 'rgba(0,0,0,0.6)';
+            const resultText = currentData.result;
+            ctx.fillText(resultText, 200, 310);
+
+            // Date
+            ctx.font = '14px -apple-system, BlinkMacSystemFont, sans-serif';
+            ctx.fillStyle = 'rgba(0,0,0,0.5)';
+            ctx.fillText(currentData.date, 200, 470);
+
+            // Download
+            const link = document.createElement('a');
+            link.download = `暗恋表白_${currentData.yourName}_${currentData.crushName}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+
+            showToast('图片已下载！');
+        }
+
+        function copyCard() {
+            if (!currentData) return;
+
+            const text = `💕 暗恋表白测试结果\n\n${currentData.yourName} · ${currentData.crushName}\n暗恋指数：${currentData.matchPercent}%\n${currentData.result}\n\n测试于 ${currentData.date}`;
+
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('已复制到剪贴板！');
+            }).catch(() => {
+                showToast('复制失败，请手动复制');
+            });
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        // Load history on page load
+        renderHistory();
+    </script>
+</body>
+</html>
