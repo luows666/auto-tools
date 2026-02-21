@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Tools - 实用工具箱</title>
+    <meta name="description" content="41款实用工具合集 - 密码生成、JSON格式化、记账本、单位转换、朋友圈卡片生成器等。免费使用，无需联网，数据本地存储。">
+    <meta name="keywords" content="工具箱,实用工具,密码生成器,JSON格式化,记账本,卡片生成,朋友圈,分享">
+    <meta name="author" content="Auto Company">
+    <meta property="og:title" content="Auto Tools - 实用工具箱">
+    <meta property="og:description" content="100%离线开发者工具箱，数据本地存储，隐私安全">
+    <meta property="og:type" content="website">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --income: #3b82f6;
+            --expense: #f97316;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --gradient-5: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --gradient-6: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            --gradient-7: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            --gradient-8: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(180deg, #f0f4ff 0%, #f8fafc 100%);
+            color: var(--text);
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 8s ease infinite;
+            color: white;
+            padding: 20px;
+            padding-top: 40px;
+            border-radius: 0 0 32px 32px;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            margin-bottom: 4px;
+        }
+
+        header p {
+            opacity: 0.9;
+            font-size: 0.875rem;
+        }
+
+        .visitor-counter {
+            margin-top: 12px;
+            font-size: 0.75rem;
+            opacity: 0.8;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255,255,255,0.2);
+            padding: 4px 10px;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        .checkin-btn {
+            margin-top: 8px;
+            background: rgba(255,255,255,0.25);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .checkin-btn:hover {
+            background: rgba(255,255,255,0.35);
+        }
+
+        .checkin-btn.checked {
+            background: #10b981;
+            border-color: #10b981;
+        }
+
+        .streak-info {
+            margin-top: 8px;
+            font-size: 0.75rem;
+            opacity: 0.9;
+        }
+
+        .streak-info span {
+            font-weight: 600;
+            color: #fbbf24;
+        }
+
+        .visitor-counter span {
+            font-weight: 600;
+        }
+
+        /* Tool Grid - Quick Access */
+        .tool-grid-section {
+            padding: 20px 16px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .tool-grid-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+        }
+
+        .tool-card {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 16px 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-1);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tool-card:nth-child(8n+1)::before { background: var(--gradient-1); }
+        .tool-card:nth-child(8n+2)::before { background: var(--gradient-2); }
+        .tool-card:nth-child(8n+3)::before { background: var(--gradient-3); }
+        .tool-card:nth-child(8n+4)::before { background: var(--gradient-4); }
+        .tool-card:nth-child(8n+5)::before { background: var(--gradient-5); }
+        .tool-card:nth-child(8n+6)::before { background: var(--gradient-6); }
+        .tool-card:nth-child(8n+7)::before { background: var(--gradient-7); }
+        .tool-card:nth-child(8n+8)::before { background: var(--gradient-8); }
+
+        .tool-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .tool-card:hover::before {
+            opacity: 1;
+        }
+
+        .tool-card .icon {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .tool-card .name {
+            font-size: 0.813rem;
+            color: var(--text);
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .tool-card .badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            font-size: 0.625rem;
+            padding: 2px 6px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Tab Navigation */
+        .tabs {
+            display: flex;
+            gap: 8px;
+            padding: 16px;
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab {
+            padding: 10px 16px;
+            border: none;
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            color: var(--text-light);
+            border-radius: 12px;
+            font-size: 0.813rem;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .tab:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Content */
+        .content {
+            padding: 16px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .tool-section {
+            display: none;
+        }
+
+        .tool-section.active {
+            display: block;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            margin-bottom: 16px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .card h2 {
+            font-size: 1.125rem;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        /* Animated gradient border for popular cards */
+        .card.popular {
+            position: relative;
+            background: linear-gradient(white, white) padding-box,
+                        linear-gradient(135deg, #667eea, #764ba2, #f093fb) border-box;
+            border: 2px solid transparent;
+        }
+
+        /* Form Elements */
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-bottom: 12px;
+            font-family: inherit;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: var(--text);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-group button {
+            flex: 1;
+        }
+
+        /* Password Generator */
+        .password-display {
+            font-family: 'Courier New', monospace;
+            font-size: 1.25rem;
+            background: #f1f5f9;
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
+            word-break: break-all;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.875rem;
+        }
+
+        .option input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+
+        /* JSON Formatter */
+        .code-output {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 16px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            white-space: pre-wrap;
+            word-break: break-all;
+            max-height: 400px;
+            overflow: auto;
+        }
+
+        /* Budget */
+        .budget-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .summary-item {
+            text-align: center;
+            padding: 16px;
+            border-radius: 12px;
+            background: #f8fafc;
+        }
+
+        .summary-item.income {
+            background: #dbeafe;
+        }
+
+        .summary-item.expense {
+            background: #ffedd5;
+        }
+
+        .summary-item.balance {
+            background: #dcfce7;
+        }
+
+        .summary-item .label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            margin-bottom: 4px;
+        }
+
+        .summary-item .value {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .transaction {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: #f8fafc;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .transaction .desc {
+            font-weight: 500;
+        }
+
+        .transaction .amount {
+            font-weight: 600;
+        }
+
+        .transaction .amount.income {
+            color: var(--income);
+        }
+
+        .transaction .amount.expense {
+            color: var(--expense);
+        }
+
+        /* Converter */
+        .converter-grid {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 12px;
+            align-items: end;
+        }
+
+        .converter-grid .arrow {
+            font-size: 1.5rem;
+            padding-bottom: 12px;
+        }
+
+        /* Timer */
+        .timer-display {
+            font-size: 4rem;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            padding: 40px 0;
+        }
+
+        .timer-controls {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        /* Color Picker */
+        .color-preview {
+            height: 100px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .color-values {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        /* Hash */
+        .hash-output {
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            word-break: break-all;
+            background: #f1f5f9;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 12px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>✨ Auto Tools</h1>
+        <p>41款实用工具，让生活更有趣</p>
+        <div class="visitor-counter" onclick="showCheckin()">
+            <span>👁</span> <span id="visitorCount">1</span> 次浏览
+        </div>
+        <div class="streak-info">
+            🔥 连续签到: <span id="streakDays">0</span> 天 | 积分: <span id="userPoints">0</span>
+        </div>
+        <button class="checkin-btn" id="checkinBtn" onclick="doCheckin(event)">📅 每日签到</button>
+        <div id="achievements" style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 4px; justify-content: center;"></div>
+    </header>
+
+    <!-- Quick Access Tool Grid -->
+    <div class="tool-grid-section">
+        <div class="tool-grid-title">
+            <span>🚀</span> 快速访问
+        </div>
+        <div class="tool-grid">
+            <div class="tool-card" onclick="switchTab('password');trackToolUsage('密码生成')">
+                <span class="icon">🔐</span>
+                <span class="name">密码生成</span>
+            </div>
+            <div class="tool-card" onclick="switchTab('json');trackToolUsage('JSON工具')">
+                <span class="icon">📄</span>
+                <span class="name">JSON 工具</span>
+            </div>
+            <div class="tool-card" onclick="switchTab('budget');trackToolUsage('记账本')">
+                <span class="icon">💰</span>
+                <span class="name">记账本</span>
+            </div>
+            <div class="tool-card" onclick="switchTab('converter');trackToolUsage('单位转换')">
+                <span class="icon">📐</span>
+                <span class="name">单位转换</span>
+            </div>
+            <div class="tool-card" onclick="switchTab('timer');trackToolUsage('计时器')">
+                <span class="icon">⏱️</span>
+                <span class="name">计时器</span>
+            </div>
+            <div class="tool-card" onclick="switchTab('color');trackToolUsage('颜色提取')">
+                <span class="icon">🎨</span>
+                <span class="name">颜色提取</span>
+            </div>
+            <div class="tool-card" onclick="trackToolUsage('时间进度');window.open('progress-card.html', '_blank')">
+                <span class="icon">📊</span>
+                <span class="name">时间进度</span>
+            </div>
+            <div class="tool-card" onclick="trackToolUsage('今日运势');window.open('fortune-card.html', '_blank')">
+                <span class="icon">✨</span>
+                <span class="name">今日运势</span>
+                <span class="badge">热门</span>
+            </div>
+            <div class="tool-card" onclick="trackToolUsage('缘分配对');window.open('love-match.html', '_blank')">
+                <span class="icon">💕</span>
+                <span class="name">缘分配对</span>
+            </div>
+            <div class="tool-card" onclick="trackToolUsage('每日抽签');window.open('fortune-draw.html', '_blank')">
+                <span class="icon">🎯</span>
+                <span class="name">每日抽签</span>
+            </div>
+            <div class="tool-card" onclick="trackToolUsage('幸运颜色');window.open('lucky-color.html', '_blank')">
+                <span class="icon">🌈</span>
+                <span class="name">幸运颜色</span>
+            </div>
+            <div class="tool-card" onclick="trackToolUsage('性格测试');window.open('personality-test.html', '_blank')">
+                <span class="icon">🧠</span>
+                <span class="name">性格测试</span>
+            </div>
+            <div class="tool-card" onclick="trackToolUsage('早安卡片');window.open('morning-card.html', '_blank')">
+                <span class="icon">🌅</span>
+                <span class="name">早安卡片</span>
+            </div>
+            <div class="tool-card" onclick="trackToolUsage('晚安卡片');window.open('goodnight-card.html', '_blank')">
+                <span class="icon">🌙</span>
+                <span class="name">晚安卡片</span>
+            </div>
+            <div class="tool-card" onclick="trackToolUsage('妇女节');window.open('womens-day.html', '_blank')">
+                <span class="icon">🌸</span>
+                <span class="name">妇女节祝福</span>
+                <span class="badge">NEW</span>
+            </div>
+            <div class="tool-card" onclick="trackToolUsage('恋爱天数');window.open('love-days.html', '_blank')">
+                <span class="icon">💑</span>
+                <span class="name">恋爱天数</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="tabs">
+        <button class="tab active" data-tab="password">密码生成</button>
+        <button class="tab" data-tab="json">JSON 工具</button>
+        <button class="tab" data-tab="budget">记账</button>
+        <button class="tab" data-tab="converter">单位转换</button>
+        <button class="tab" data-tab="timer">计时器</button>
+        <button class="tab" data-tab="color">颜色</button>
+        <button class="tab" data-tab="hash">Hash</button>
+        <button class="tab" data-tab="payment">收款码</button>
+        <button class="tab" data-tab="wordcount">字数统计</button>
+        <button class="tab" data-tab="weight" onclick="trackToolUsage('体重记录');window.open('weight-card.html', '_blank')">体重记录</button>
+        <button class="tab" data-tab="flag" onclick="trackToolUsage('FLAG卡片');window.open('flag-card.html', '_blank')">FLAG 卡片</button>
+        <button class="tab" data-tab="love" onclick="trackToolUsage('缘分配对');window.open('love-match.html', '_blank')">缘分配对</button>
+        <button class="tab" data-tab="lyric" onclick="trackToolUsage('歌词海报');window.open('lyric-poster.html', '_blank')">歌词海报</button>
+        <button class="tab" data-tab="energy" onclick="trackToolUsage('能量卡');window.open('energy-card.html', '_blank')">能量卡</button>
+        <button class="tab" data-tab="truth" onclick="trackToolUsage('真心话大冒险');window.open('truth-or-dare.html', '_blank')">真心话</button>
+        <button class="tab" data-tab="spin" onclick="trackToolUsage('抽奖转盘');window.open('spin-wheel.html', '_blank')">抽奖转盘</button>
+        <button class="tab" data-tab="ninegrid" onclick="trackToolUsage('九宫格');window.open('nine-grid.html', '_blank')">九宫格</button>
+        <button class="tab" data-tab="lucky" onclick="trackToolUsage('幸运数字');window.open('lucky-number.html', '_blank')">幸运数字</button>
+        <button class="tab" data-tab="luckyclr" onclick="trackToolUsage('幸运颜色');window.open('lucky-color.html', '_blank')">幸运颜色</button>
+        <button class="tab" data-tab="chat" onclick="trackToolUsage('聊天记录');window.open('chat-screenshot.html', '_blank')">聊天记录</button>
+        <button class="tab" data-tab="progress" onclick="trackToolUsage('时间进度');window.open('progress-card.html', '_blank')">时间进度</button>
+        <button class="tab" data-tab="year" onclick="trackToolUsage('年度回忆');window.open('year-review.html', '_blank')">年度回忆</button>
+        <button class="tab" data-tab="quote" onclick="trackToolUsage('毒鸡汤');window.open('quote-card.html', '_blank')">毒鸡汤</button>
+        <button class="tab" data-tab="fortune" onclick="trackToolUsage('今日运势');window.open('fortune-card.html', '_blank')">今日运势</button>
+        <button class="tab" data-tab="birthday" onclick="trackToolUsage('生日倒计日');window.open('birthday-countdown.html', '_blank')">生日倒计</button>
+        <button class="tab" data-tab="lovedays" onclick="trackToolUsage('恋爱天数');window.open('love-days.html', '_blank')">恋爱天数</button>
+        <button class="tab" data-tab="morning" onclick="trackToolUsage('早安卡片');window.open('morning-card.html', '_blank')">早安卡片</button>
+        <button class="tab" data-tab="praise" onclick="trackToolUsage('彩虹屁');window.open('praise-card.html', '_blank')">彩虹屁</button>
+        <button class="tab" data-tab="fish" onclick="trackToolUsage('摸鱼日历');window.open('fish-calendar.html', '_blank')">摸鱼日历</button>
+        <button class="tab" data-tab="food" onclick="trackToolUsage('今天吃啥');window.open('food-picker.html', '_blank')">今天吃啥</button>
+        <button class="tab" data-tab="personality" onclick="trackToolUsage('性格测试');window.open('personality-test.html', '_blank')">性格测试</button>
+        <button class="tab" data-tab="animal" onclick="trackToolUsage('动物测试');window.open('animal-test.html', '_blank')">动物人格</button>
+        <button class="tab" data-tab="annual" onclick="trackToolUsage('年度账单');window.open('annual-bill.html', '_blank')">年度账单</button>
+        <button class="tab" data-tab="draw" onclick="trackToolUsage('每日抽签');window.open('fortune-draw.html', '_blank')">每日抽签</button>
+        <button class="tab" data-tab="resign" onclick="trackToolUsage('辞职信');window.open('resignation-letter.html', '_blank')">辞职信</button>
+        <button class="tab" data-tab="valentine" onclick="trackToolUsage('情人节');window.open('valentine-card.html', '_blank')">情人节卡片</button>
+        <button class="tab" data-tab="wish" onclick="trackToolUsage('愿望清单');window.open('wish-list.html', '_blank')">愿望清单</button>
+        <button class="tab" data-tab="dream" onclick="trackToolUsage('梦境解梦');window.open('dream-interpreter.html', '_blank')">梦境解梦</button>
+        <button class="tab" data-tab="social" onclick="trackToolUsage('社恐测试');window.open('social-test.html', '_blank')">社恐测试</button>
+        <button class="tab" data-tab="goodnight" onclick="trackToolUsage('晚安卡片');window.open('goodnight-card.html', '_blank')">晚安卡片</button>
+        <button class="tab" data-tab="womens" onclick="trackToolUsage('妇女节');window.open('womens-day.html', '_blank')">妇女节</button>
+    </div>
+
+    <!-- Popular Tools Section -->
+    <div id="popularTools" style="padding: 16px; max-width: 800px; margin: 0 auto; display: none;">
+        <div class="card popular" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%); color: white; border-radius: 20px; padding: 24px;">
+            <h2 style="color: white; font-size: 1.25rem;">🏆 热门工具 TOP 5</h2>
+            <p style="opacity: 0.9; font-size: 0.875rem; margin-bottom: 16px;">大家都在用这些工具</p>
+            <div id="popularToolsList"></div>
+        </div>
+    </div>
+
+    <div class="content">
+        <!-- Password Generator -->
+        <div class="tool-section active" id="password">
+            <div class="card">
+                <h2>🔐 密码生成器</h2>
+                <div class="password-display" id="passwordDisplay">点击生成</div>
+                <div class="options">
+                    <label class="option"><input type="checkbox" id="useUppercase" checked> 大写字母</label>
+                    <label class="option"><input type="checkbox" id="useLowercase" checked> 小写字母</label>
+                    <label class="option"><input type="checkbox" id="useNumbers" checked> 数字</label>
+                    <label class="option"><input type="checkbox" id="useSymbols" checked> 符号</label>
+                </div>
+                <div style="margin-bottom: 12px;">
+                    <label style="font-size: 0.875rem;">长度: <span id="lengthValue">16</span></label>
+                    <input type="range" id="passwordLength" min="4" max="64" value="16" style="margin-bottom: 0;">
+                </div>
+                <button class="btn-primary" onclick="generatePassword()">生成密码</button>
+                <div class="btn-group" style="margin-top: 8px;">
+                    <button class="btn-secondary" onclick="copyToClipboard(document.getElementById('passwordDisplay').textContent)">复制</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- JSON Tools -->
+        <div class="tool-section" id="json">
+            <div class="card">
+                <h2>📄 JSON 格式化</h2>
+                <textarea id="jsonInput" rows="6" placeholder="粘贴 JSON..."></textarea>
+                <div class="btn-group">
+                    <button class="btn-primary" onclick="formatJSON()">格式化</button>
+                    <button class="btn-secondary" onclick="minifyJSON()">压缩</button>
+                </div>
+                <div class="btn-group" style="margin-top: 8px;">
+                    <button class="btn-secondary" onclick="validateJSON()">验证</button>
+                    <button class="btn-secondary" onclick="copyJSON()">复制结果</button>
+                </div>
+                <div class="code-output" id="jsonOutput" style="margin-top: 16px; display: none;"></div>
+            </div>
+            <div class="card">
+                <h2>🔄 Base64 编解码</h2>
+                <textarea id="base64Input" rows="3" placeholder="输入内容..."></textarea>
+                <div class="btn-group">
+                    <button class="btn-primary" onclick="encodeBase64()">编码</button>
+                    <button class="btn-secondary" onclick="decodeBase64()">解码</button>
+                </div>
+                <div class="hash-output" id="base64Output" style="display: none; margin-top: 12px;"></div>
+            </div>
+            <div class="card">
+                <h2>🔗 URL 编解码</h2>
+                <textarea id="urlInput" rows="3" placeholder="输入 URL..."></textarea>
+                <div class="btn-group">
+                    <button class="btn-primary" onclick="encodeURL()">编码</button>
+                    <button class="btn-secondary" onclick="decodeURL()">解码</button>
+                </div>
+                <div class="hash-output" id="urlOutput" style="display: none; margin-top: 12px;"></div>
+            </div>
+        </div>
+
+        <!-- Budget -->
+        <div class="tool-section" id="budget">
+            <div class="card">
+                <h2>💰 记账本</h2>
+                <div class="budget-summary">
+                    <div class="summary-item income">
+                        <div class="label">收入</div>
+                        <div class="value" id="totalIncome">¥0</div>
+                    </div>
+                    <div class="summary-item expense">
+                        <div class="label">支出</div>
+                        <div class="value" id="totalExpense">¥0</div>
+                    </div>
+                    <div class="summary-item balance">
+                        <div class="label">结余</div>
+                        <div class="value" id="totalBalance">¥0</div>
+                    </div>
+                </div>
+                <input type="text" id="txDesc" placeholder="描述 (可选)">
+                <input type="number" id="txAmount" placeholder="金额">
+                <div class="btn-group">
+                    <button class="btn-success" onclick="addTransaction('income')">收入</button>
+                    <button class="btn-primary" onclick="addTransaction('expense')">支出</button>
+                </div>
+            </div>
+            <div class="card">
+                <h2>📊 交易记录</h2>
+                <div id="transactionList">
+                    <p style="color: var(--text-light); text-align: center;">暂无记录</p>
+                </div>
+                <button class="btn-secondary" style="margin-top: 12px; width: 100%;" onclick="clearTransactions()">清空记录</button>
+            </div>
+        </div>
+
+        <!-- Converter -->
+        <div class="tool-section" id="converter">
+            <div class="card">
+                <h2>📐 单位转换</h2>
+                <div class="converter-grid">
+                    <div>
+                        <input type="number" id="convInput" placeholder="输入数值">
+                        <select id="convFrom">
+                            <option value="km">公里</option>
+                            <option value="m">米</option>
+                            <option value="cm">厘米</option>
+                            <option value="mm">毫米</option>
+                            <option value="mi">英里</option>
+                            <option value="ft">英尺</option>
+                            <option value="in">英寸</option>
+                        </select>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div>
+                        <select id="convTo">
+                            <option value="m">米</option>
+                            <option value="km">公里</option>
+                            <option value="cm">厘米</option>
+                            <option value="mm">毫米</option>
+                            <option value="mi">英里</option>
+                            <option value="ft">英尺</option>
+                            <option value="in">英寸</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn-primary" onclick="convert()">转换</button>
+                <div class="password-display" id="convResult" style="margin-top: 12px;">-</div>
+            </div>
+            <div class="card">
+                <h2>🌡️ 温度转换</h2>
+                <input type="number" id="tempInput" placeholder="输入温度">
+                <select id="tempFrom">
+                    <option value="c">摄氏度 (°C)</option>
+                    <option value="f">华氏度 (°F)</option>
+                    <option value="k">开尔文 (K)</option>
+                </select>
+                <select id="tempTo">
+                    <option value="f">华氏度 (°F)</option>
+                    <option value="c">摄氏度 (°C)</option>
+                    <option value="k">开尔文 (K)</option>
+                </select>
+                <button class="btn-primary" onclick="convertTemp()">转换</button>
+                <div class="password-display" id="tempResult" style="margin-top: 12px;">-</div>
+            </div>
+            <div class="card">
+                <h2>⚖️ 重量转换</h2>
+                <input type="number" id="weightInput" placeholder="输入重量">
+                <select id="weightFrom">
+                    <option value="kg">千克</option>
+                    <option value="g">克</option>
+                    <option value="lb">磅</option>
+                    <option value="oz">盎司</option>
+                </select>
+                <select id="weightTo">
+                    <option value="g">克</option>
+                    <option value="kg">千克</option>
+                    <option value="lb">磅</option>
+                    <option value="oz">盎司</option>
+                </select>
+                <button class="btn-primary" onclick="convertWeight()">转换</button>
+                <div class="password-display" id="weightResult" style="margin-top: 12px;">-</div>
+            </div>
+        </div>
+
+        <!-- Timer -->
+        <div class="tool-section" id="timer">
+            <div class="card">
+                <h2>⏱️ 计时器</h2>
+                <div class="timer-display" id="timerDisplay">00:00:00</div>
+                <div class="timer-controls">
+                    <button class="btn-primary" id="timerStartBtn" onclick="startTimer()">开始</button>
+                    <button class="btn-secondary" onclick="stopTimer()">停止</button>
+                    <button class="btn-secondary" onclick="resetTimer()">重置</button>
+                </div>
+            </div>
+            <div class="card">
+                <h2>⏰ 倒计时</h2>
+                <input type="number" id="countdownInput" placeholder="秒数" value="60">
+                <button class="btn-primary" onclick="startCountdown()">开始倒计时</button>
+            </div>
+        </div>
+
+        <!-- Color -->
+        <div class="tool-section" id="color">
+            <div class="card">
+                <h2>🎨 颜色提取</h2>
+                <input type="color" id="colorPicker" value="#6366f1" style="height: 50px; padding: 8px;" onchange="updateColor()">
+                <div class="color-preview" id="colorPreview" style="background: #6366f1;">
+                    #6366f1
+                </div>
+                <div class="color-values">
+                    <div>
+                        <label style="font-size: 0.75rem;">HEX</label>
+                        <input type="text" id="hexValue" value="#6366f1" readonly>
+                    </div>
+                    <div>
+                        <label style="font-size: 0.75rem;">RGB</label>
+                        <input type="text" id="rgbValue" value="99, 102, 241" readonly>
+                    </div>
+                    <div>
+                        <label style="font-size: 0.75rem;">HSL</label>
+                        <input type="text" id="hslValue" value="239, 84%, 67%" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hash -->
+        <div class="tool-section" id="hash">
+            <div class="card">
+                <h2>#️⃣ Hash 生成</h2>
+                <textarea id="hashInput" rows="4" placeholder="输入文本..."></textarea>
+                <button class="btn-primary" onclick="generateHash('md5')">MD5</button>
+                <div class="btn-group" style="margin-top: 8px;">
+                    <button class="btn-secondary" onclick="generateHash('sha1')">SHA-1</button>
+                    <button class="btn-secondary" onclick="generateHash('sha256')">SHA-256</button>
+                </div>
+                <div class="hash-output" id="hashOutput" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- Payment QR -->
+        <div class="tool-section" id="payment">
+            <div class="card">
+                <h2>💳 聚合收款码</h2>
+                <p style="color: var(--text-light); font-size: 0.875rem; margin-bottom: 16px;">
+                    将支付宝、微信、QQ钱包收款码合成为一个页面，方便客户扫码支付
+                </p>
+                <button class="btn-primary" onclick="window.open('payment-qr.html', '_blank')">打开收款码管理</button>
+                <p style="color: var(--text-light); font-size: 0.75rem; margin-top: 12px;">
+                    在新页面中上传您的收款码图片，然后分享链接给客户
+                </p>
+            </div>
+            <div class="card">
+                <h2>🔗 快速使用</h2>
+                <p style="font-size: 0.875rem; margin-bottom: 12px;">直接打开收款页面：</p>
+                <button class="btn-secondary" style="width: 100%;" onclick="window.open('payment-qr.html?pay=1', '_blank')">打开付款页面</button>
+            </div>
+        </div>
+
+        <!-- Word Count -->
+        <div class="tool-section" id="wordcount">
+            <div class="card">
+                <h2>📝 字数统计</h2>
+                <textarea id="wordCountInput" rows="6" placeholder="输入或粘贴文本..."></textarea>
+                <button class="btn-primary" onclick="countWords()">统计</button>
+                <div id="wordCountResults" style="display: none; margin-top: 16px;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.875rem;">
+                        <div>总字符: <strong id="wcTotal">0</strong></div>
+                        <div>无空格: <strong id="wcNoSpace">0</strong></div>
+                        <div>中文: <strong id="wcChinese">0</strong></div>
+                        <div>英文: <strong id="wcEnglish">0</strong></div>
+                        <div>单词: <strong id="wcWords">0</strong></div>
+                        <div>行数: <strong id="wcLines">0</strong></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Daily Check-in System
+        const CHECKIN_KEY = 'auto-tools-checkin';
+
+        function getCheckinData() {
+            const data = localStorage.getItem(CHECKIN_KEY);
+            return data ? JSON.parse(data) : { lastDate: null, streak: 0, points: 0 };
+        }
+
+        function saveCheckinData(data) {
+            localStorage.setItem(CHECKIN_KEY, JSON.stringify(data));
+        }
+
+        function updateCheckinUI() {
+            const data = getCheckinData();
+            const today = new Date().toDateString();
+            const btn = document.getElementById('checkinBtn');
+
+            document.getElementById('streakDays').textContent = data.streak;
+            document.getElementById('userPoints').textContent = data.points;
+
+            if (data.lastDate === today) {
+                btn.textContent = '✅ 已签到';
+                btn.classList.add('checked');
+                btn.disabled = true;
+            }
+        }
+
+        function doCheckin(e) {
+            e.stopPropagation();
+            const data = getCheckinData();
+            const today = new Date();
+            const todayStr = today.toDateString();
+
+            if (data.lastDate === todayStr) return;
+
+            // Calculate streak
+            if (data.lastDate) {
+                const lastDate = new Date(data.lastDate);
+                const diffDays = Math.floor((today - lastDate) / (1000 * 60 * 60 * 24));
+                if (diffDays === 1) {
+                    data.streak++;
+                } else if (diffDays > 1) {
+                    data.streak = 1;
+                }
+            } else {
+                data.streak = 1;
+            }
+
+            // Add points (more for longer streaks)
+            const pointsEarned = Math.min(10, 2 + data.streak);
+            data.points += pointsEarned;
+            data.lastDate = todayStr;
+
+            saveCheckinData(data);
+            updateCheckinUI();
+
+            // Check for new achievements
+            const earned = getAchievements();
+            const beforeCount = earned.length;
+            showAchievements();
+            const afterEarned = getAchievements();
+            const newCount = afterEarned.length;
+
+            let achievementMsg = '';
+            if (newCount > beforeCount) {
+                const newBadges = achievementDefs.filter(d => afterEarned.includes(d.id) && !earned.includes(d.id));
+                achievementMsg = '\n\n🎉 新成就解锁: ' + newBadges.map(b => `${b.icon} ${b.name}`).join(', ');
+            }
+
+            alert(`签到成功！+${pointsEarned} 积分\n连续签到 ${data.streak} 天 🎉${achievementMsg}`);
+        }
+
+        function showCheckin() {
+            const data = getCheckinData();
+            const today = new Date().toDateString();
+            const lastCheckin = data.lastDate ? new Date(data.lastDate).toDateString() : '从未签到';
+
+            let msg = `上次签到: ${lastCheckin}\n连续签到: ${data.streak} 天\n当前积分: ${data.points}`;
+
+            if (data.lastDate !== today) {
+                msg += '\n\n点击"每日签到"按钮签到获得积分！';
+            }
+
+            // Simple alert for now
+            console.log(msg);
+        }
+
+        // Show popular tools
+        function showPopularTools() {
+            const topTools = getTopTools();
+            const container = document.getElementById('popularToolsList');
+            const wrapper = document.getElementById('popularTools');
+
+            if (topTools.length === 0) {
+                wrapper.style.display = 'none';
+                return;
+            }
+
+            wrapper.style.display = 'block';
+            const medals = ['🥇', '🥈', '🥉', '4️⃣', '5️⃣'];
+
+            container.innerHTML = topTools.map(([name, count], i) => `
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.3);">
+                    <span>${medals[i]} ${name}</span>
+                    <span style="background: rgba(255,255,255,0.3); padding: 2px 8px; border-radius: 10px; font-size: 0.8rem;">${count}次</span>
+                </div>
+            `).join('');
+        }
+
+        // Tool Usage Tracking
+        const TOOL_USAGE_KEY = 'auto-tools-usage';
+
+        function trackToolUsage(toolName) {
+            const usage = JSON.parse(localStorage.getItem(TOOL_USAGE_KEY) || '{}');
+            usage[toolName] = (usage[toolName] || 0) + 1;
+            localStorage.setItem(TOOL_USAGE_KEY, JSON.stringify(usage));
+        }
+
+        function getTopTools() {
+            const usage = JSON.parse(localStorage.getItem(TOOL_USAGE_KEY) || '{}');
+            return Object.entries(usage)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 5);
+        }
+
+        // Achievement System
+        const ACHIEVEMENTS_KEY = 'auto-tools-achievements';
+
+        const achievementDefs = [
+            { id: 'first_checkin', name: '新人签到', icon: '🌟', desc: '完成首次签到', check: (d, u) => d.lastDate },
+            { id: 'streak_3', name: '连续3天', icon: '🔥', desc: '连续签到3天', check: (d, u) => d.streak >= 3 },
+            { id: 'streak_7', name: '连续7天', icon: '💪', desc: '连续签到7天', check: (d, u) => d.streak >= 7 },
+            { id: 'streak_30', name: '坚持不懈', icon: '🏆', desc: '连续签到30天', check: (d, u) => d.streak >= 30 },
+            { id: 'tools_5', name: '工具达人', icon: '🛠️', desc: '使用5种不同工具', check: (d, u) => Object.keys(u).length >= 5 },
+            { id: 'tools_10', name: '工具大师', icon: '🎯', desc: '使用10种不同工具', check: (d, u) => Object.keys(u).length >= 10 },
+            { id: 'points_50', name: '积分达人', icon: '💎', desc: '累计50积分', check: (d, u) => d.points >= 50 },
+            { id: 'points_100', name: '积分大师', icon: '⭐', desc: '累计100积分', check: (d, u) => d.points >= 100 },
+        ];
+
+        function getAchievements() {
+            return JSON.parse(localStorage.getItem(ACHIEVEMENTS_KEY) || '[]');
+        }
+
+        function saveAchievements(list) {
+            localStorage.setItem(ACHIEVEMENTS_KEY, JSON.stringify(list));
+        }
+
+        function checkAchievements() {
+            const checkinData = getCheckinData();
+            const toolUsage = JSON.parse(localStorage.getItem(TOOL_USAGE_KEY) || '{}');
+            const earned = getAchievements();
+            const newBadges = [];
+
+            achievementDefs.forEach(def => {
+                if (!earned.includes(def.id) && def.check(checkinData, toolUsage)) {
+                    earned.push(def.id);
+                    newBadges.push(def);
+                }
+            });
+
+            if (newBadges.length > 0) {
+                saveAchievements(earned);
+                const names = newBadges.map(b => `${b.icon} ${b.name}`).join(', ');
+                // Show notification but don't spam
+                console.log(`🎉 获得新成就: ${names}`);
+            }
+
+            return earned;
+        }
+
+        function showAchievements() {
+            const earned = checkAchievements();
+            const container = document.getElementById('achievements');
+            if (!container) return;
+
+            container.innerHTML = achievementDefs.map(def => {
+                const isEarned = earned.includes(def.id);
+                return `<span title="${def.desc}" style="opacity: ${isEarned ? 1 : 0.3}; font-size: 1.2rem; cursor: help;">${def.icon}</span>`;
+            }).join('');
+        }
+
+        // Update achievements after check-in
+        const originalDoCheckin = doCheckin;
+        doCheckin = function(e) {
+            originalDoCheckin(e);
+            showAchievements();
+        };
+
+        // Update achievements after tool usage
+        const originalTrackToolUsage = trackToolUsage;
+        trackToolUsage = function(toolName) {
+            originalTrackToolUsage(toolName);
+            showAchievements();
+        };
+
+        // Visitor Counter with global analytics
+        (async function() {
+            const namespace = 'auto-tools';
+            const key = 'auto-tools-visits';
+
+            try {
+                // Try to use countapi.xyz for global counting
+                const response = await fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('visitorCount').textContent = data.value.toLocaleString();
+                } else {
+                    throw new Error('CountAPI failed');
+                }
+            } catch (e) {
+                // Fallback to localStorage
+                let count = parseInt(localStorage.getItem(key) || '0');
+                count++;
+                localStorage.setItem(key, count.toString());
+                document.getElementById('visitorCount').textContent = count.toLocaleString();
+            }
+
+            // Initialize check-in UI
+            updateCheckinUI();
+            showPopularTools();
+            showAchievements();
+        })();
+
+        // Tab Navigation
+        function switchTab(tabId) {
+            const toolNames = {
+                'json': 'JSON工具', 'budget': '记账', 'converter': '单位转换',
+                'timer': '计时器', 'color': '颜色工具', 'hash': 'Hash工具',
+                'payment': '收款码', 'wordcount': '字数统计', 'password': '密码生成器'
+            };
+
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tool-section').forEach(s => s.classList.remove('active'));
+
+            // Find and activate the tab button
+            const tabBtn = document.querySelector(`.tab[data-tab="${tabId}"]`);
+            if (tabBtn) {
+                tabBtn.classList.add('active');
+            }
+
+            // Activate the tool section
+            const section = document.getElementById(tabId);
+            if (section) {
+                section.classList.add('active');
+            }
+
+            // Track usage
+            if (toolNames[tabId]) {
+                trackToolUsage(toolNames[tabId]);
+            }
+
+            // Scroll to top smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.dataset.tab || tab.getAttribute('onclick')?.match(/switchTab\('([^']+)'\)/)?.[1];
+                if (tabId) {
+                    switchTab(tabId);
+                }
+            });
+        });
+
+        // Password Generator
+        const chars = {
+            upper: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+            lower: 'abcdefghijklmnopqrstuvwxyz',
+            number: '0123456789',
+            symbol: '!@#$%^&*()_+-=[]{}|;:,.<>?'
+        };
+
+        document.getElementById('passwordLength').addEventListener('input', function() {
+            document.getElementById('lengthValue').textContent = this.value;
+        });
+
+        function generatePassword() {
+            let charset = '';
+            charset += document.getElementById('useUppercase').checked ? chars.upper : '';
+            charset += document.getElementById('useLowercase').checked ? chars.lower : '';
+            charset += document.getElementById('useNumbers').checked ? chars.number : '';
+            charset += document.getElementById('useSymbols').checked ? chars.symbol : '';
+
+            if (!charset) {
+                alert('请至少选择一种字符类型');
+                return;
+            }
+
+            const length = parseInt(document.getElementById('passwordLength').value);
+            let password = '';
+            for (let i = 0; i < length; i++) {
+                password += charset[Math.floor(Math.random() * charset.length)];
+            }
+            document.getElementById('passwordDisplay').textContent = password;
+        }
+
+        // JSON Tools
+        function formatJSON() {
+            try {
+                const input = document.getElementById('jsonInput').value;
+                const obj = JSON.parse(input);
+                const formatted = JSON.stringify(obj, null, 2);
+                const output = document.getElementById('jsonOutput');
+                output.textContent = formatted;
+                output.style.display = 'block';
+            } catch (e) {
+                alert('无效的 JSON: ' + e.message);
+            }
+        }
+
+        function minifyJSON() {
+            try {
+                const input = document.getElementById('jsonInput').value;
+                const obj = JSON.parse(input);
+                const minified = JSON.stringify(obj);
+                const output = document.getElementById('jsonOutput');
+                output.textContent = minified;
+                output.style.display = 'block';
+            } catch (e) {
+                alert('无效的 JSON: ' + e.message);
+            }
+        }
+
+        function validateJSON() {
+            try {
+                JSON.parse(document.getElementById('jsonInput').value);
+                alert('✓ JSON 有效');
+            } catch (e) {
+                alert('✗ JSON 无效: ' + e.message);
+            }
+        }
+
+        function copyJSON() {
+            const text = document.getElementById('jsonOutput').textContent;
+            copyToClipboard(text);
+        }
+
+        function encodeBase64() {
+            const input = document.getElementById('base64Input').value;
+            const output = document.getElementById('base64Output');
+            output.textContent = btoa(unescape(encodeURIComponent(input)));
+            output.style.display = 'block';
+        }
+
+        function decodeBase64() {
+            try {
+                const input = document.getElementById('base64Input').value;
+                const output = document.getElementById('base64Output');
+                output.textContent = decodeURIComponent(escape(atob(input)));
+                output.style.display = 'block';
+            } catch (e) {
+                alert('解码失败');
+            }
+        }
+
+        function encodeURL() {
+            const input = document.getElementById('urlInput').value;
+            const output = document.getElementById('urlOutput');
+            output.textContent = encodeURIComponent(input);
+            output.style.display = 'block';
+        }
+
+        function decodeURL() {
+            const input = document.getElementById('urlInput').value;
+            const output = document.getElementById('urlOutput');
+            output.textContent = decodeURIComponent(input);
+            output.style.display = 'block';
+        }
+
+        // Budget
+        let transactions = JSON.parse(localStorage.getItem('transactions') || '[]');
+
+        function updateBudget() {
+            let income = 0, expense = 0;
+            transactions.forEach(tx => {
+                if (tx.type === 'income') income += tx.amount;
+                else expense += tx.amount;
+            });
+            document.getElementById('totalIncome').textContent = '¥' + income.toFixed(0);
+            document.getElementById('totalExpense').textContent = '¥' + expense.toFixed(0);
+            document.getElementById('totalBalance').textContent = '¥' + (income - expense).toFixed(0);
+
+            const list = document.getElementById('transactionList');
+            if (transactions.length === 0) {
+                list.innerHTML = '<p style="color: var(--text-light); text-align: center;">暂无记录</p>';
+            } else {
+                list.innerHTML = transactions.map((tx, i) => `
+                    <div class="transaction">
+                        <span class="desc">${tx.desc || (tx.type === 'income' ? '收入' : '支出')}</span>
+                        <span class="amount ${tx.type}">${tx.type === 'income' ? '+' : '-'}¥${tx.amount}</span>
+                    </div>
+                `).reverse().join('');
+            }
+            localStorage.setItem('transactions', JSON.stringify(transactions));
+        }
+
+        function addTransaction(type) {
+            const amount = parseFloat(document.getElementById('txAmount').value);
+            if (!amount || amount <= 0) {
+                alert('请输入有效金额');
+                return;
+            }
+            const desc = document.getElementById('txDesc').value;
+            transactions.push({ type, amount, desc, date: Date.now() });
+            document.getElementById('txAmount').value = '';
+            document.getElementById('txDesc').value = '';
+            updateBudget();
+        }
+
+        function clearTransactions() {
+            if (confirm('确定清空所有记录?')) {
+                transactions = [];
+                updateBudget();
+            }
+        }
+
+        updateBudget();
+
+        // Converter
+        const lengthFactors = { km: 1000, m: 1, cm: 0.01, mm: 0.001, mi: 1609.344, ft: 0.3048, in: 0.0254 };
+        const weightFactors = { kg: 1000, g: 1, lb: 453.592, oz: 28.3495 };
+
+        function convert() {
+            const val = parseFloat(document.getElementById('convInput').value);
+            const from = document.getElementById('convFrom').value;
+            const to = document.getElementById('convTo').value;
+            if (isNaN(val)) return;
+            const meters = val * lengthFactors[from];
+            const result = meters / lengthFactors[to];
+            document.getElementById('convResult').textContent = result.toFixed(4);
+        }
+
+        function convertTemp() {
+            const val = parseFloat(document.getElementById('tempInput').value);
+            const from = document.getElementById('tempFrom').value;
+            const to = document.getElementById('tempTo').value;
+            if (isNaN(val)) return;
+
+            let celsius;
+            if (from === 'c') celsius = val;
+            else if (from === 'f') celsius = (val - 32) * 5/9;
+            else celsius = val - 273.15;
+
+            let result;
+            if (to === 'c') result = celsius;
+            else if (to === 'f') result = celsius * 9/5 + 32;
+            else result = celsius + 273.15;
+
+            document.getElementById('tempResult').textContent = result.toFixed(2);
+        }
+
+        function convertWeight() {
+            const val = parseFloat(document.getElementById('weightInput').value);
+            const from = document.getElementById('weightFrom').value;
+            const to = document.getElementById('weightTo').value;
+            if (isNaN(val)) return;
+            const grams = val * weightFactors[from];
+            const result = grams / weightFactors[to];
+            document.getElementById('weightResult').textContent = result.toFixed(4);
+        }
+
+        // Timer
+        let timerInterval = null;
+        let seconds = 0;
+
+        function startTimer() {
+            if (timerInterval) return;
+            document.getElementById('timerStartBtn').disabled = true;
+            timerInterval = setInterval(() => {
+                seconds++;
+                updateTimerDisplay();
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            document.getElementById('timerStartBtn').disabled = false;
+        }
+
+        function resetTimer() {
+            stopTimer();
+            seconds = 0;
+            updateTimerDisplay();
+        }
+
+        function updateTimerDisplay() {
+            const h = Math.floor(seconds / 3600).toString().padStart(2, '0');
+            const m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+            const s = (seconds % 60).toString().padStart(2, '0');
+            document.getElementById('timerDisplay').textContent = `${h}:${m}:${s}`;
+        }
+
+        function startCountdown() {
+            let sec = parseInt(document.getElementById('countdownInput').value);
+            if (isNaN(sec) || sec <= 0) return;
+            const display = document.getElementById('timerDisplay');
+            const interval = setInterval(() => {
+                const m = Math.floor(sec / 60).toString().padStart(2, '0');
+                const s = (sec % 60).toString().padStart(2, '0');
+                display.textContent = `${m}:${s}`;
+                if (--sec < 0) {
+                    clearInterval(interval);
+                    display.textContent = '00:00';
+                    alert('倒计时结束!');
+                }
+            }, 1000);
+        }
+
+        // Color
+        function updateColor() {
+            const hex = document.getElementById('colorPicker').value;
+            const preview = document.getElementById('colorPreview');
+            preview.style.background = hex;
+            preview.textContent = hex;
+
+            const r = parseInt(hex.slice(1, 3), 16);
+            const g = parseInt(hex.slice(3, 5), 16);
+            const b = parseInt(hex.slice(5, 7), 16);
+
+            document.getElementById('hexValue').value = hex;
+            document.getElementById('rgbValue').value = `${r}, ${g}, ${b}`;
+
+            const rNorm = r / 255, gNorm = g / 255, bNorm = b / 255;
+            const max = Math.max(rNorm, gNorm, bNorm), min = Math.min(rNorm, gNorm, bNorm);
+            let h, s, l = (max + min) / 2;
+            if (max === min) {
+                h = s = 0;
+            } else {
+                const d = max - min;
+                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                switch (max) {
+                    case rNorm: h = ((gNorm - bNorm) / d + (gNorm < bNorm ? 6 : 0)) / 6; break;
+                    case gNorm: h = ((bNorm - rNorm) / d + 2) / 6; break;
+                    case bNorm: h = ((rNorm - gNorm) / d + 4) / 6; break;
+                }
+            }
+            document.getElementById('hslValue').value = `${Math.round(h * 360)}, ${Math.round(s * 100)}%, ${Math.round(l * 100)}%`;
+        }
+
+        // Hash (Simple implementation)
+        async function generateHash(type) {
+            const input = document.getElementById('hashInput').value;
+            const encoder = new TextEncoder();
+            const data = encoder.encode(input);
+
+            let hashBuffer;
+            if (type === 'md5') {
+                // MD5 not available in Web Crypto, use simple fallback
+                alert('MD5 需要外部库，使用 SHA-256 代替');
+                return;
+            } else if (type === 'sha1') {
+                hashBuffer = await crypto.subtle.digest('SHA-1', data);
+            } else {
+                hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            }
+
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+            const output = document.getElementById('hashOutput');
+            output.textContent = hashHex;
+            output.style.display = 'block';
+        }
+
+        // Utilities
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('已复制到剪贴板');
+            }).catch(() => {
+                alert('复制失败，请手动复制');
+            });
+        }
+
+        // Word Count
+        function countWords() {
+            const text = document.getElementById('wordCountInput').value;
+            if (!text.trim()) {
+                alert('请输入文本');
+                return;
+            }
+
+            const charCount = text.length;
+            const charNoSpace = text.replace(/\s/g, '').length;
+            const chinese = (text.match(/[\u4e00-\u9fa5]/g) || []).length;
+            const english = (text.match(/[a-zA-Z]/g) || []).length;
+            const words = (text.match(/[a-zA-Z]+/g) || []).length;
+            const lines = text.split(/\r?\n/).length;
+
+            document.getElementById('wcTotal').textContent = charCount;
+            document.getElementById('wcNoSpace').textContent = charNoSpace;
+            document.getElementById('wcChinese').textContent = chinese;
+            document.getElementById('wcEnglish').textContent = english;
+            document.getElementById('wcWords').textContent = words;
+            document.getElementById('wcLines').textContent = lines;
+
+            document.getElementById('wordCountResults').style.display = 'block';
+        }
+    </script>
+
+    <!-- Floating Support Button -->
+    <a href="sponsor.html" target="_blank" class="floating-sponsor" title="赞助支持">
+        ☕
+    </a>
+
+    <style>
+        .floating-sponsor {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 20px rgba(245, 87, 108, 0.4);
+            z-index: 1000;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+        }
+
+        .floating-sponsor:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 8px 30px rgba(245, 87, 108, 0.5);
+        }
+
+        @media (max-width: 480px) {
+            .floating-sponsor {
+                bottom: 70px;
+                right: 16px;
+                width: 48px;
+                height: 48px;
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <a href="sponsor.html" target="_blank" class="footer-link">☕ 赞助支持</a>
+            <span class="footer-divider">·</span>
+            <a href="feedback.html" target="_blank" class="footer-link">💬 反馈建议</a>
+            <span class="footer-divider">·</span>
+            <a href="https://github.com/luows666/auto-tools" target="_blank" class="footer-link">⭐ GitHub</a>
+        </div>
+        <div class="footer-copyright">
+            Made with ❤️ by Auto Company
+        </div>
+    </footer>
+
+    <style>
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 14px;
+            text-align: center;
+            border-top: 1px solid rgba(226, 232, 240, 0.6);
+            font-size: 0.813rem;
+            z-index: 999;
+        }
+
+        .footer-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: #7c3aed;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+            padding: 4px 8px;
+            border-radius: 8px;
+        }
+
+        .footer-link:hover {
+            background: rgba(124, 58, 237, 0.1);
+            color: #6d28d9;
+        }
+
+        .footer-divider {
+            color: #d1d5db;
+        }
+
+        .footer-copyright {
+            margin-top: 8px;
+            font-size: 0.75rem;
+            color: #9ca3af;
+        }
+
+        @media (max-width: 480px) {
+            footer {
+                padding: 12px;
+            }
+            .footer-link {
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</body>
+</html>
