@@ -2,289 +2,364 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://luows666.github.io/auto-tools/</loc>
-        <lastmod>2026-02-21</lastmod>
+        <lastmod>2026-02-22</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
         <loc>https://luows666.github.io/auto-tools/index.html</loc>
-        <lastmod>2026-02-21</lastmod>
+        <lastmod>2026-02-22</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>https://luows666.github.io/auto-tools/cash-register.html</loc>
-        <lastmod>2026-02-21</lastmod>
+        <loc>https://luows666.github.io/auto-tools/sponsor.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <!-- Card Generators -->
+    <url>
+        <loc>https://luows666.github.io/auto-tools/card-generators/animal-test.html</loc>
+        <lastmod>2026-02-22</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://luows666.github.io/auto-tools/personal-budget.html</loc>
-        <lastmod>2026-02-21</lastmod>
+        <loc>https://luows666.github.io/auto-tools/card-generators/annual-bill.html</loc>
+        <lastmod>2026-02-22</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://luows666.github.io/auto-tools/dev-tools.html</loc>
-        <lastmod>2026-02-21</lastmod>
+        <loc>https://luows666.github.io/auto-tools/card-generators/birthday-countdown.html</loc>
+        <lastmod>2026-02-22</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://luows666.github.io/auto-tools/suite.html</loc>
-        <lastmod>2026-02-21</lastmod>
+        <loc>https://luows666.github.io/auto-tools/card-generators/caption-generator.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/card-generators/chat-screenshot.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/card-generators/crush-confession.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/card-generators/dream-interpreter.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/card-generators/energy-card.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/card-generators/exam-blessing.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/card-generators/fish-calendar.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/card-generators/flag-card.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/card-generators/food-picker.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/card-generators/fortune-card.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/card-generators/fortune-draw.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/card-generators/goodnight-card.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/card-generators/love-days.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/card-generators/love-match.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/card-generators/lucky-color.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/card-generators/lucky-number.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/card-generators/lyric-poster.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/card-generators/morning-card.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/card-generators/nine-grid.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/card-generators/personality-test.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/card-generators/praise-card.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/card-generators/progress-card.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/card-generators/quote-card.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/card-generators/red-envelope.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/card-generators/resignation-letter.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/card-generators/social-test.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/card-generators/spin-wheel.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/card-generators/truth-or-dare.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/card-generators/valentine-card.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/card-generators/weight-card.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/card-generators/wish-list.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/card-generators/womens-day.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/card-generators/year-review.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <!-- Utility Tools -->
+    <url>
+        <loc>https://luows666.github.io/auto-tools/tools/attendance.html</loc>
+        <lastmod>2026-02-22</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://luows666.github.io/auto-tools/download.html</loc>
-        <lastmod>2026-02-21</lastmod>
+        <loc>https://luows666.github.io/auto-tools/tools/cash-register.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/tools/contracts.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/tools/countdown.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/tools/dev-tools.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/tools/discount.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/tools/download.html</loc>
+        <lastmod>2026-02-22</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>https://luows666.github.io/auto-tools/marketing.html</loc>
-        <lastmod>2026-02-21</lastmod>
+        <loc>https://luows666.github.io/auto-tools/tools/habit-tracker.html</loc>
+        <lastmod>2026-02-22</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://luows666.github.io/auto-tools/qrcode.html</loc>
-        <lastmod>2026-02-21</lastmod>
+        <loc>https://luows666.github.io/auto-tools/tools/hash-check.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/tools/inventory.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/tools/invoice.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/tools/marketing.html</loc>
+        <lastmod>2026-02-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://luows666.github.io/auto-tools/tools/personal-budget.html</loc>
+        <lastmod>2026-02-22</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://luows666.github.io/auto-tools/utility-bill.html</loc>
-        <lastmod>2026-02-21</lastmod>
+        <loc>https://luows666.github.io/auto-tools/tools/payment-qr.html</loc>
+        <lastmod>2026-02-22</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
+        <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://luows666.github.io/auto-tools/inventory.html</loc>
-        <lastmod>2026-02-21</lastmod>
+        <loc>https://luows666.github.io/auto-tools/tools/qrcode.html</loc>
+        <lastmod>2026-02-22</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
+        <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://luows666.github.io/auto-tools/payment-qr.html</loc>
-        <lastmod>2026-02-21</lastmod>
+        <loc>https://luows666.github.io/auto-tools/tools/suite.html</loc>
+        <lastmod>2026-02-22</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
+        <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://luows666.github.io/auto-tools/invoice.html</loc>
-        <lastmod>2026-02-21</lastmod>
+        <loc>https://luows666.github.io/auto-tools/tools/tts.html</loc>
+        <lastmod>2026-02-22</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
+        <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://luows666.github.io/auto-tools/contracts.html</loc>
-        <lastmod>2026-02-21</lastmod>
+        <loc>https://luows666.github.io/auto-tools/tools/utility-bill.html</loc>
+        <lastmod>2026-02-22</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
+        <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://luows666.github.io/auto-tools/todo.html</loc>
-        <lastmod>2026-02-21</lastmod>
+        <loc>https://luows666.github.io/auto-tools/tools/word-count.html</loc>
+        <lastmod>2026-02-22</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
+        <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://luows666.github.io/auto-tools/attendance.html</loc>
-        <lastmod>2026-02-21</lastmod>
+        <loc>https://luows666.github.io/auto-tools/tools/todo.html</loc>
+        <lastmod>2026-02-22</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
+        <priority>0.7</priority>
     </url>
+    <!-- Tests -->
     <url>
-        <loc>https://luows666.github.io/auto-tools/tts.html</loc>
-        <lastmod>2026-02-21</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://luows666.github.io/auto-tools/discount.html</loc>
-        <lastmod>2026-02-21</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://luows666.github.io/auto-tools/countdown.html</loc>
-        <lastmod>2026-02-21</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://luows666.github.io/auto-tools/word-count.html</loc>
-        <lastmod>2026-02-21</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://luows666.github.io/auto-tools/habit-tracker.html</loc>
-        <lastmod>2026-02-21</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://luows666.github.io/auto-tools/hash-check.html</loc>
-        <lastmod>2026-02-21</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://luows666.github.io/auto-tools/progress-card.html</loc>
-        <lastmod>2026-02-21</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://luows666.github.io/auto-tools/year-review.html</loc>
-        <lastmod>2026-02-21</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://luows666.github.io/auto-tools/fortune-card.html</loc>
-        <lastmod>2026-02-21</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://luows666.github.io/auto-tools/lyric-poster.html</loc>
-        <lastmod>2026-02-21</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://luows666.github.io/auto-tools/energy-card.html</loc>
-        <lastmod>2026-02-21</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://luows666.github.io/auto-tools/morning-card.html</loc>
-        <lastmod>2026-02-21</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://luows666.github.io/auto-tools/praise-card.html</loc>
-        <lastmod>2026-02-21</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://luows666.github.io/auto-tools/food-picker.html</loc>
-        <lastmod>2026-02-21</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://luows666.github.io/auto-tools/fish-calendar.html</loc>
-        <lastmod>2026-02-21</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://luows666.github.io/auto-tools/weight-card.html</loc>
-        <lastmod>2026-02-21</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://luows666.github.io/auto-tools/flag-card.html</loc>
-        <lastmod>2026-02-21</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://luows666.github.io/auto-tools/love-match.html</loc>
-        <lastmod>2026-02-21</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://luows666.github.io/auto-tools/truth-or-dare.html</loc>
-        <lastmod>2026-02-21</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://luows666.github.io/auto-tools/spin-wheel.html</loc>
-        <lastmod>2026-02-21</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://luows666.github.io/auto-tools/nine-grid.html</loc>
-        <lastmod>2026-02-21</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://luows666.github.io/auto-tools/lucky-number.html</loc>
-        <lastmod>2026-02-21</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://luows666.github.io/auto-tools/chat-screenshot.html</loc>
-        <lastmod>2026-02-21</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://luows666.github.io/auto-tools/personality-test.html</loc>
-        <lastmod>2026-02-21</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://luows666.github.io/auto-tools/annual-bill.html</loc>
-        <lastmod>2026-02-21</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://luows666.github.io/auto-tools/fortune-draw.html</loc>
-        <lastmod>2026-02-21</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://luows666.github.io/auto-tools/animal-test.html</loc>
-        <lastmod>2026-02-21</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://luows666.github.io/auto-tools/resignation-letter.html</loc>
-        <lastmod>2026-02-21</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://luows666.github.io/auto-tools/caption-generator.html</loc>
-        <lastmod>2026-02-21</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://luows666.github.io/auto-tools/valentine-card.html</loc>
-        <lastmod>2026-02-21</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://luows666.github.io/auto-tools/feedback.html</loc>
-        <lastmod>2026-02-21</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://luows666.github.io/auto-tools/sponsor.html</loc>
-        <lastmod>2026-02-21</lastmod>
+        <loc>https://luows666.github.io/auto-tools/tests/feedback.html</loc>
+        <lastmod>2026-02-22</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
