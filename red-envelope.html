@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>红包祝福生成器 - Auto Tools</title>
+    <meta name="description" content="生成精美红包祝福卡片，适合春节、开工、生日等场景，一键分享朋友圈。">
+    <meta name="keywords" content="红包祝福,春节祝福,开工利是,生日祝福,朋友圈">
+    <style>
+        :root {
+            --primary: #e53935;
+            --primary-dark: #c62828;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --gold: #ffd700;
+            --gold-dark: #ffa000;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(180deg, #fff5f5 0%, #f8fafc 100%);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 20px;
+            padding-bottom: 100px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 1.5rem;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.875rem;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            margin-bottom: 16px;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(229, 57, 53, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: var(--text);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .btn-group button {
+            flex: 1;
+        }
+
+        /* Preview Card */
+        .preview-section {
+            margin-top: 20px;
+        }
+
+        .preview-card {
+            width: 100%;
+            aspect-ratio: 4/5;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+        }
+
+        .red-envelope {
+            width: 180px;
+            height: 240px;
+            background: linear-gradient(145deg, #c62828 0%, #b71c1c 100%);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+
+        .red-envelope::before {
+            content: '福';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 100px;
+            color: var(--gold);
+            opacity: 0.3;
+            font-weight: bold;
+        }
+
+        .red-envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: linear-gradient(180deg, #d32f2f 0%, #c62828 100%);
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+        }
+
+        .envelope-amount {
+            font-size: 42px;
+            font-weight: bold;
+            color: var(--gold);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            z-index: 1;
+        }
+
+        .envelope-label {
+            font-size: 14px;
+            color: rgba(255,255,255,0.8);
+            margin-top: 8px;
+            z-index: 1;
+        }
+
+        .blessing-text {
+            margin-top: 30px;
+            font-size: 20px;
+            color: var(--primary);
+            text-align: center;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        .sender-info {
+            margin-top: 16px;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .style-options {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .style-option {
+            aspect-ratio: 1;
+            border-radius: 12px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .style-option.selected {
+            border-color: var(--primary);
+            transform: scale(1.05);
+        }
+
+        .history-section {
+            margin-top: 20px;
+        }
+
+        .history-title {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+
+        .history-item {
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .history-item:hover {
+            background: #f1f5f9;
+        }
+
+        .toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        .sponsor-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(238, 90, 90, 0.4);
+            transition: all 0.3s;
+            z-index: 100;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .sponsor-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Background styles */
+        .bg-red { background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); }
+        .bg-gold { background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%); }
+        .bg-pink { background: linear-gradient(135deg, #ec4899 0%, #be185d 100%); }
+        .bg-blue { background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); }
+        .bg-green { background: linear-gradient(135deg, #10b981 0%, #047857 100%); }
+        .bg-purple { background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%); }
+        .bg-gradient { background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%); }
+        .bg-spring { background: linear-gradient(135deg, #84cc16 0%, #22c55e 50%, #14b8a6 100%); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧧 红包祝福生成器</h1>
+        <p class="subtitle">生成精美红包祝福卡片，一键分享朋友圈</p>
+
+        <div class="card">
+            <label>选择祝福场景</label>
+            <select id="scene">
+                <option value="spring">春节红包</option>
+                <option value="work">开工利是</option>
+                <option value="birthday">生日红包</option>
+                <option value="wedding">新婚红包</option>
+                <option value="baby">满月酒</option>
+                <option value="holiday">节日祝福</option>
+            </select>
+
+            <label>输入祝福金额</label>
+            <input type="text" id="amount" placeholder="如：888、1000、200" value="888">
+
+            <label>选择卡片风格</label>
+            <div class="style-options">
+                <div class="style-option bg-red selected" data-style="red" title="红色喜庆">🧧</div>
+                <div class="style-option bg-gold" data-style="gold" title="金色大气">💰</div>
+                <div class="style-option bg-pink" data-style="pink" title="粉色浪漫">💕</div>
+                <div class="style-option bg-blue" data-style="blue" title="蓝色清新">💎</div>
+                <div class="style-option bg-green" data-style="green" title="绿色生机">🍀</div>
+                <div class="style-option bg-purple" data-style="purple" title="紫色神秘">💜</div>
+                <div class="style-option bg-gradient" data-style="gradient" title="渐变梦幻">🌈</div>
+                <div class="style-option bg-spring" data-style="spring" title="春日清新">🌸</div>
+            </div>
+
+            <label>输入祝福语（选填）</label>
+            <textarea id="blessing" rows="2" placeholder="如：恭喜发财，大吉大利"></textarea>
+
+            <label>发送人昵称（选填）</label>
+            <input type="text" id="sender" placeholder="如：小明">
+
+            <button class="btn-primary" onclick="generateCard()">生成祝福卡片</button>
+
+            <div class="btn-group">
+                <button class="btn-secondary" onclick="downloadCard()">📥 下载图片</button>
+                <button class="btn-secondary" onclick="copyToClipboard()">📋 复制</button>
+            </div>
+        </div>
+
+        <div class="preview-section">
+            <div class="preview-card" id="previewCard">
+                <div class="red-envelope">
+                    <div class="red-envelope-flap"></div>
+                    <div class="envelope-amount" id="previewAmount">888</div>
+                    <div class="envelope-label" id="previewLabel">恭喜发财</div>
+                </div>
+                <div class="blessing-text" id="previewBlessing">恭喜发财，大吉大利</div>
+                <div class="sender-info" id="previewSender"></div>
+            </div>
+        </div>
+
+        <div class="history-section" id="historySection" style="display: none;">
+            <div class="history-title">历史记录</div>
+            <div id="historyList"></div>
+        </div>
+    </div>
+
+    <a href="sponsor.html" class="sponsor-btn">☕ 支持我们</a>
+    <div class="toast" id="toast"></div>
+
+    <script>
+        const sceneTexts = {
+            spring: '恭喜发财',
+            work: '开工大吉',
+            birthday: '生日快乐',
+            wedding: '百年好合',
+            baby: '健康成长',
+            holiday: '节日快乐'
+        };
+
+        const blessingTemplates = [
+            '恭喜发财，大吉大利',
+            '财源广进，步步高升',
+            '万事如意，岁岁平安',
+            '金玉满堂，富贵吉祥',
+            '心想事成，万事顺遂',
+            '鸿运当头，财运亨通',
+            '事业有成，前程似锦',
+            '身体健康，阖家幸福'
+        ];
+
+        let currentStyle = 'red';
+        let currentBgStyle = 'bg-red';
+
+        // Style selection
+        document.querySelectorAll('.style-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.style-option').forEach(o => o.classList.remove('selected'));
+                option.classList.add('selected');
+                currentStyle = option.dataset.style;
+                currentBgStyle = 'bg-' + currentStyle;
+                updatePreview();
+            });
+        });
+
+        function updatePreview() {
+            const amount = document.getElementById('amount').value || '888';
+            const scene = document.getElementById('scene').value;
+            const blessing = document.getElementById('blessing').value;
+            const sender = document.getElementById('sender').value;
+
+            document.getElementById('previewAmount').textContent = amount;
+            document.getElementById('previewLabel').textContent = sceneTexts[scene];
+
+            if (blessing) {
+                document.getElementById('previewBlessing').textContent = blessing;
+            } else {
+                document.getElementById('previewBlessing').textContent = blessingTemplates[Math.floor(Math.random() * blessingTemplates.length)];
+            }
+
+            if (sender) {
+                document.getElementById('previewSender').textContent = '—— ' + sender;
+            } else {
+                document.getElementById('previewSender').textContent = '';
+            }
+
+            const card = document.getElementById('previewCard');
+            card.className = 'preview-card ' + currentBgStyle;
+        }
+
+        function generateCard() {
+            const scene = document.getElementById('scene').value;
+            const amount = document.getElementById('amount').value || '888';
+            const blessing = document.getElementById('blessing').value || blessingTemplates[Math.floor(Math.random() * blessingTemplates.length)];
+            const sender = document.getElementById('sender').value;
+            const style = currentStyle;
+
+            updatePreview();
+            saveToHistory(scene, amount, blessing, sender, style);
+            showToast('祝福卡片已生成！');
+        }
+
+        function saveToHistory(scene, amount, blessing, sender, style) {
+            let history = JSON.parse(localStorage.getItem('redEnvelopeHistory') || '[]');
+            history.unshift({
+                scene, amount, blessing, sender, style,
+                time: new Date().toLocaleString()
+            });
+            history = history.slice(0, 10);
+            localStorage.setItem('redEnvelopeHistory', JSON.stringify(history));
+            renderHistory();
+        }
+
+        function renderHistory() {
+            const history = JSON.parse(localStorage.getItem('redEnvelopeHistory') || '[]');
+            if (history.length === 0) return;
+
+            document.getElementById('historySection').style.display = 'block';
+            const list = document.getElementById('historyList');
+            list.innerHTML = history.map((item, i) => `
+                <div class="history-item" onclick="loadHistory(${i})">
+                    ${item.sceneTexts?.[item.scene] || sceneTexts[item.scene]} · ${item.amount}元 · ${item.blessing.substring(0, 10)}...
+                </div>
+            `).join('');
+        }
+
+        function loadHistory(index) {
+            const history = JSON.parse(localStorage.getItem('redEnvelopeHistory') || '[]');
+            const item = history[index];
+            if (!item) return;
+
+            document.getElementById('scene').value = item.scene;
+            document.getElementById('amount').value = item.amount;
+            document.getElementById('blessing').value = item.blessing;
+            document.getElementById('sender').value = item.sender || '';
+
+            document.querySelectorAll('.style-option').forEach(o => {
+                o.classList.toggle('selected', o.dataset.style === item.style);
+            });
+            currentStyle = item.style;
+            currentBgStyle = 'bg-' + item.style;
+
+            updatePreview();
+        }
+
+        async function downloadCard() {
+            const card = document.getElementById('previewCard');
+
+            try {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                const scale = 2;
+
+                canvas.width = 400 * scale;
+                canvas.height = 500 * scale;
+                ctx.scale(scale, scale);
+
+                // Draw background
+                const bgColors = {
+                    red: '#ef4444',
+                    gold: '#f59e0b',
+                    pink: '#ec4899',
+                    blue: '#3b82f6',
+                    green: '#10b981',
+                    purple: '#8b5cf6',
+                    gradient: '#667eea',
+                    spring: '#84cc16'
+                };
+
+                const gradient = ctx.createLinearGradient(0, 0, 400, 500);
+                if (currentStyle === 'gradient') {
+                    gradient.addColorStop(0, '#667eea');
+                    gradient.addColorStop(0.5, '#764ba2');
+                    gradient.addColorStop(1, '#f093fb');
+                } else if (currentStyle === 'spring') {
+                    gradient.addColorStop(0, '#84cc16');
+                    gradient.addColorStop(0.5, '#22c55e');
+                    gradient.addColorStop(1, '#14b8a6');
+                } else {
+                    gradient.addColorStop(0, bgColors[currentStyle]);
+                    gradient.addColorStop(1, bgColors[currentStyle] + 'dd');
+                }
+
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, 400, 500);
+
+                // Draw white center area
+                ctx.fillStyle = 'white';
+                ctx.beginPath();
+                ctx.roundRect(40, 60, 320, 380, 20);
+                ctx.fill();
+
+                // Draw red envelope
+                const envX = 100;
+                const envY = 120;
+                const envW = 200;
+                const envH = 260;
+
+                // Envelope body
+                const envGrad = ctx.createLinearGradient(envX, envY, envX, envY + envH);
+                envGrad.addColorStop(0, '#c62828');
+                envGrad.addColorStop(1, '#b71c1c');
+                ctx.fillStyle = envGrad;
+                ctx.beginPath();
+                ctx.roundRect(envX, envY, envW, envH, 16);
+                ctx.fill();
+
+                // Envelope flap
+                ctx.fillStyle = '#d32f2f';
+                ctx.beginPath();
+                ctx.moveTo(envX, envY);
+                ctx.lineTo(envX + envW, envY);
+                ctx.lineTo(envX + envW / 2, envY + 80);
+                ctx.closePath();
+                ctx.fill();
+
+                // Fortune character
+                ctx.fillStyle = 'rgba(255, 215, 0, 0.3)';
+                ctx.font = 'bold 80px "KaiTi", serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('福', envX + envW / 2, envY + envH / 2 + 20);
+
+                // Amount
+                ctx.fillStyle = '#ffd700';
+                ctx.font = 'bold 48px "KaiTi", serif';
+                ctx.shadowColor = 'rgba(0,0,0,0.3)';
+                ctx.shadowBlur = 4;
+                ctx.fillText(document.getElementById('amount').value || '888', envX + envW / 2, envY + envH / 2 + 10);
+                ctx.shadowBlur = 0;
+
+                // Label
+                ctx.fillStyle = 'rgba(255,255,255,0.8)';
+                ctx.font = '14px "KaiTi", serif';
+                ctx.fillText(document.getElementById('previewLabel').textContent, envX + envW / 2, envY + envH / 2 + 50);
+
+                // Blessing text
+                ctx.fillStyle = currentStyle === 'red' ? '#b91c1c' : (currentStyle === 'pink' ? '#be185d' : (currentStyle === 'blue' ? '#1d4ed8' : (currentStyle === 'green' ? '#047857' : (currentStyle === 'purple' ? '#6d28d9' : '#b45309'))));
+                ctx.font = 'bold 20px "KaiTi", serif';
+                const blessing = document.getElementById('previewBlessing').textContent;
+                ctx.fillText(blessing, 200, 420);
+
+                // Sender
+                if (document.getElementById('previewSender').textContent) {
+                    ctx.fillStyle = '#64748b';
+                    ctx.font = '14px "KaiTi", serif';
+                    ctx.fillText(document.getElementById('previewSender').textContent, 200, 450);
+                }
+
+                // Download
+                const link = document.createElement('a');
+                link.download = '红包祝福_' + Date.now() + '.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+
+                showToast('图片已保存！');
+            } catch (e) {
+                showToast('下载失败，请重试');
+                console.error(e);
+            }
+        }
+
+        async function copyToClipboard() {
+            const blessing = document.getElementById('previewBlessing').textContent;
+            const sender = document.getElementById('sender').value;
+            const amount = document.getElementById('amount').value;
+            const scene = document.getElementById('scene').value;
+
+            let text = `🧧 ${sceneTexts[scene]} ${amount}元\n${blessing}`;
+            if (sender) {
+                text += `\n—— ${sender}`;
+            }
+
+            try {
+                await navigator.clipboard.writeText(text);
+                showToast('已复制到剪贴板！');
+            } catch (e) {
+                showToast('复制失败，请重试');
+            }
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        // Initialize
+        renderHistory();
+        updatePreview();
+
+        // Auto update preview on input
+        document.getElementById('amount').addEventListener('input', updatePreview);
+        document.getElementById('scene').addEventListener('change', updatePreview);
+        document.getElementById('blessing').addEventListener('input', updatePreview);
+        document.getElementById('sender').addEventListener('input', updatePreview);
+    </script>
+</body>
+</html>
