@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>今日状态卡片 - Auto Tools</title>
+    <meta name="description" content="生成你的今日状态卡片，分享到朋友圈">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --gradient-5: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --gradient-6: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            --gradient-7: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            --gradient-8: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(180deg, #f0f4ff 0%, #f8fafc 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 600px; margin: 0 auto; }
+        header {
+            background: var(--gradient-1);
+            color: white;
+            padding: 30px 20px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        header h1 { font-size: 1.5rem; margin-bottom: 8px; }
+        header p { opacity: 0.9; font-size: 0.9rem; }
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+        .form-group { margin-bottom: 16px; }
+        label { display: block; margin-bottom: 8px; font-weight: 500; color: #374151; }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        .mood-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        .mood-option {
+            padding: 12px 8px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.85rem;
+        }
+        .mood-option:hover { border-color: var(--primary); }
+        .mood-option.selected {
+            border-color: var(--primary);
+            background: #eef2ff;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        .bg-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .bg-option {
+            height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        .bg-option:hover { transform: scale(1.05); }
+        .bg-option.selected { border-color: #1f2937; }
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background: var(--gradient-1);
+            color: white;
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4); }
+        #cardPreview {
+            margin-top: 20px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+        #cardCanvas { width: 100%; display: block; }
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        .btn-secondary {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            background: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-secondary:hover { border-color: var(--primary); color: var(--primary); }
+        .history {
+            margin-top: 20px;
+        }
+        .history h3 { font-size: 1rem; margin-bottom: 12px; color: #374151; }
+        .history-list { display: flex; flex-direction: column; gap: 8px; }
+        .history-item {
+            padding: 12px;
+            background: white;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .history-item:hover { transform: translateX(4px); }
+        .sponsor-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(245, 87, 108, 0.4);
+            animation: float 3s ease-in-out infinite;
+            z-index: 100;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .sponsor-hint {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background: white;
+            padding: 12px 16px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            font-size: 0.85rem;
+            display: none;
+            z-index: 99;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>今日状态卡片</h1>
+            <p>生成你的今日状态，分享到朋友圈</p>
+        </header>
+
+        <div class="card">
+            <div class="form-group">
+                <label>你的昵称</label>
+                <input type="text" id="nickname" placeholder="输入你的昵称" maxlength="20">
+            </div>
+
+            <div class="form-group">
+                <label>今日状态</label>
+                <div class="mood-grid">
+                    <div class="mood-option selected" data-value="happy">😊 开心</div>
+                    <div class="mood-option" data-value="busy">💼 忙碌</div>
+                    <div class="mood-option" data-value="tired">😴 疲惫</div>
+                    <div class="mood-option" data-value="excited">🎉 兴奋</div>
+                    <div class="mood-option" data-value="calm">😌 平静</div>
+                    <div class="mood-option" data-value="anxious">😰 焦虑</div>
+                    <div class="mood-option" data-value="grateful">💕 感恩</div>
+                    <div class="mood-option" data-value="hopeful">🌟 期待</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>一句话总结今天</label>
+                <input type="text" id="summary" placeholder="今天也要加油呀！" maxlength="30">
+            </div>
+
+            <div class="form-group">
+                <label>选择背景风格</label>
+                <div class="bg-grid">
+                    <div class="bg-option selected" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%)" data-value="1"></div>
+                    <div class="bg-option" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%)" data-value="2"></div>
+                    <div class="bg-option" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)" data-value="3"></div>
+                    <div class="bg-option" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)" data-value="4"></div>
+                    <div class="bg-option" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%)" data-value="5"></div>
+                    <div class="bg-option" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)" data-value="6"></div>
+                    <div class="bg-option" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)" data-value="7"></div>
+                    <div class="bg-option" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)" data-value="8"></div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="generateCard()">生成卡片</button>
+        </div>
+
+        <div id="cardPreview" style="display: none;">
+            <canvas id="cardCanvas" width="600" height="800"></canvas>
+            <div class="actions">
+                <button class="btn-secondary" onclick="downloadCard()">📥 下载图片</button>
+                <button class="btn-secondary" onclick="copyCard()">📋 复制图片</button>
+            </div>
+        </div>
+
+        <div class="history" id="historySection" style="display: none;">
+            <h3>历史记录</h3>
+            <div class="history-list" id="historyList"></div>
+        </div>
+    </div>
+
+    <button class="sponsor-btn" onclick="location.href='sponsor.html'">☕ 支持我们</button>
+
+    <script>
+        const gradients = {
+            1: ['#667eea', '#764ba2'],
+            2: ['#f093fb', '#f5576c'],
+            3: ['#4facfe', '#00f2fe'],
+            4: ['#43e97b', '#38f9d7'],
+            5: ['#fa709a', '#fee140'],
+            6: ['#a8edea', '#fed6e3'],
+            7: ['#ff9a9e', '#fecfef'],
+            8: ['#ffecd2', '#fcb69f']
+        };
+
+        const moodEmojis = {
+            happy: '😊', busy: '💼', tired: '😴', excited: '🎉',
+            calm: '😌', anxious: '😰', grateful: '💕', hopeful: '🌟'
+        };
+
+        const moodTexts = {
+            happy: '开心', busy: '忙碌', tired: '疲惫', excited: '兴奋',
+            calm: '平静', anxious: '焦虑', grateful: '感恩', hopeful: '期待'
+        };
+
+        let selectedMood = 'happy';
+        let selectedBg = 1;
+
+        document.querySelectorAll('.mood-option').forEach(opt => {
+            opt.addEventListener('click', () => {
+                document.querySelectorAll('.mood-option').forEach(o => o.classList.remove('selected'));
+                opt.classList.add('selected');
+                selectedMood = opt.dataset.value;
+            });
+        });
+
+        document.querySelectorAll('.bg-option').forEach(opt => {
+            opt.addEventListener('click', () => {
+                document.querySelectorAll('.bg-option').forEach(o => o.classList.remove('selected'));
+                opt.classList.add('selected');
+                selectedBg = parseInt(opt.dataset.value);
+            });
+        });
+
+        function generateCard() {
+            const nickname = document.getElementById('nickname').value || '我';
+            const summary = document.getElementById('summary').value || '今天也要加油呀！';
+
+            const canvas = document.getElementById('cardCanvas');
+            const ctx = canvas.getContext('2d');
+            const [c1, c2] = gradients[selectedBg];
+
+            // Background
+            const gradient = ctx.createLinearGradient(0, 0, 600, 800);
+            gradient.addColorStop(0, c1);
+            gradient.addColorStop(1, c2);
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 600, 800);
+
+            // Decorations
+            ctx.fillStyle = 'rgba(255,255,255,0.15)';
+            for (let i = 0; i < 20; i++) {
+                const x = Math.random() * 600;
+                const y = Math.random() * 800;
+                const r = Math.random() * 4 + 2;
+                ctx.beginPath();
+                ctx.arc(x, y, r, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // Date
+            const now = new Date();
+            const dateStr = `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日`;
+            ctx.fillStyle = 'rgba(255,255,255,0.9)';
+            ctx.font = '18px -apple-system, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(dateStr, 300, 60);
+
+            // Mood emoji large
+            ctx.font = '80px sans-serif';
+            ctx.fillText(moodEmojis[selectedMood], 300, 180);
+
+            // Mood text
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 32px -apple-system, sans-serif';
+            ctx.fillText(moodTexts[selectedMood], 300, 240);
+
+            // Nickname
+            ctx.font = '24px -apple-system, sans-serif';
+            ctx.fillText(nickname + ' 今日状态', 300, 320);
+
+            // Summary
+            ctx.font = '22px -apple-system, sans-serif';
+            ctx.fillText(summary, 300, 380);
+
+            // Divider line
+            ctx.strokeStyle = 'rgba(255,255,255,0.5)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(100, 450);
+            ctx.lineTo(500, 450);
+            ctx.stroke();
+
+            // Footer
+            ctx.fillStyle = 'rgba(255,255,255,0.8)';
+            ctx.font = '16px -apple-system, sans-serif';
+            ctx.fillText('来自 Auto Tools', 300, 750);
+
+            // Show preview
+            document.getElementById('cardPreview').style.display = 'block';
+
+            // Save to history
+            saveToHistory(nickname, selectedMood, summary, selectedBg);
+
+            // Scroll to preview
+            document.getElementById('cardPreview').scrollIntoView({behavior: 'smooth'});
+        }
+
+        function saveToHistory(nickname, mood, summary, bg) {
+            let history = JSON.parse(localStorage.getItem('moodCardHistory') || '[]');
+            const item = {
+                nickname, mood, summary, bg,
+                date: new Date().toLocaleDateString()
+            };
+            history.unshift(item);
+            if (history.length > 10) history = history.slice(0, 10);
+            localStorage.setItem('moodCardHistory', JSON.stringify(history));
+            renderHistory();
+        }
+
+        function renderHistory() {
+            const history = JSON.parse(localStorage.getItem('moodCardHistory') || '[]');
+            if (history.length === 0) {
+                document.getElementById('historySection').style.display = 'none';
+                return;
+            }
+            document.getElementById('historySection').style.display = 'block';
+            const list = document.getElementById('historyList');
+            list.innerHTML = history.map((item, i) => `
+                <div class="history-item" onclick="loadHistory(${i})">
+                    ${moodEmojis[item.mood]} ${item.nickname} - ${item.date}
+                </div>
+            `).join('');
+        }
+
+        function loadHistory(i) {
+            const history = JSON.parse(localStorage.getItem('moodCardHistory') || '[]');
+            const item = history[i];
+            if (!item) return;
+            document.getElementById('nickname').value = item.nickname;
+            document.getElementById('summary').value = item.summary;
+            document.querySelectorAll('.mood-option').forEach(o => {
+                o.classList.toggle('selected', o.dataset.value === item.mood);
+            });
+            selectedMood = item.mood;
+            document.querySelectorAll('.bg-option').forEach(o => {
+                o.classList.toggle('selected', parseInt(o.dataset.value) === item.bg);
+            });
+            selectedBg = item.bg;
+            generateCard();
+        }
+
+        function downloadCard() {
+            const canvas = document.getElementById('cardCanvas');
+            const link = document.createElement('a');
+            link.download = '今日状态卡片.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        function copyCard() {
+            const canvas = document.getElementById('cardCanvas');
+            canvas.toBlob(blob => {
+                navigator.clipboard.write([new ClipboardItem({'image/png': blob})]).then(() => {
+                    alert('已复制到剪贴板！');
+                }).catch(() => {
+                    alert('复制失败，请长按图片保存');
+                });
+            });
+        }
+
+        renderHistory();
+    </script>
+</body>
+</html>
