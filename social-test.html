@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社交恐惧症测试 - 你社恐吗？</title>
+    <meta name="description" content="趣味心理测试 - 10道题测出你的社交恐惧程度，快来看看你是社恐达人还是社交nb症！">
+    <meta property="og:title" content="社交恐惧症测试 - 你社恐吗？">
+    <meta property="og:description" content="10道题测出你的社交恐惧程度，快来挑战！">
+    <style>
+        :root {
+            --primary: #8b5cf6;
+            --primary-dark: #7c3aed;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1e293b;
+            margin-bottom: 8px;
+            font-size: 1.5rem;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        .nickname-section {
+            margin-bottom: 20px;
+        }
+
+        .nickname-section input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .nickname-section input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .question {
+            display: none;
+        }
+
+        .question.active {
+            display: block;
+        }
+
+        .question h3 {
+            color: #1e293b;
+            margin-bottom: 16px;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option {
+            padding: 14px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+            color: #475569;
+        }
+
+        .option:hover {
+            border-color: var(--primary);
+            background: #f5f3ff;
+        }
+
+        .option.selected {
+            border-color: var(--primary);
+            background: #ede9fe;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 3px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
+            transition: width 0.3s;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result-card {
+            display: none;
+            text-align: center;
+        }
+
+        .result-card.show {
+            display: block;
+        }
+
+        .result-icon {
+            font-size: 4rem;
+            margin-bottom: 16px;
+        }
+
+        .result-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--primary) 0%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .result-subtitle {
+            font-size: 1.1rem;
+            color: #1e293b;
+            margin-bottom: 16px;
+        }
+
+        .result-score {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+
+        .result-desc {
+            color: #64748b;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .result-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            padding: 6px 14px;
+            background: #f5f3ff;
+            color: var(--primary);
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .actions .btn {
+            flex: 1;
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+
+        .test-info {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.8rem;
+            margin-top: 16px;
+        }
+
+        /* Canvas for image generation */
+        #resultCanvas {
+            display: none;
+        }
+
+        .history-section {
+            margin-top: 20px;
+        }
+
+        .history-title {
+            font-size: 1rem;
+            color: #1e293b;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .history-item {
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>🫣 社交恐惧症测试</h1>
+            <p class="subtitle">10道题测出你的社交恐惧程度</p>
+
+            <div class="progress-bar">
+                <div class="progress" id="progress" style="width: 0%"></div>
+            </div>
+
+            <div class="nickname-section" id="nicknameSection">
+                <input type="text" id="nickname" placeholder="请输入你的昵称（用于生成结果卡片）" maxlength="20">
+                <button class="btn btn-primary" style="margin-top: 12px;" onclick="startTest()">开始测试</button>
+            </div>
+
+            <div id="questionsContainer">
+                <!-- Questions will be inserted here -->
+            </div>
+
+            <div class="result-card" id="resultCard">
+                <div class="result-icon" id="resultIcon">🤔</div>
+                <div class="result-title" id="resultTitle">正在分析...</div>
+                <div class="result-subtitle" id="resultSubtitle"></div>
+                <div class="result-score" id="resultScore">0%</div>
+                <div class="result-tags" id="resultTags"></div>
+                <div class="result-desc" id="resultDesc"></div>
+
+                <div class="actions">
+                    <button class="btn btn-secondary" onclick="copyResult()">📋 复制结果</button>
+                    <button class="btn btn-primary" onclick="downloadImage()">📥 下载图片</button>
+                </div>
+                <div class="actions">
+                    <button class="btn btn-secondary" onclick="restartTest()">🔄 重新测试</button>
+                </div>
+            </div>
+
+            <p class="test-info" id="testInfo"></p>
+        </div>
+
+        <div class="history-section" id="historySection">
+            <div class="history-title">📜 测试历史</div>
+            <div id="historyList"></div>
+        </div>
+    </div>
+
+    <canvas id="resultCanvas" width="600" height="800"></canvas>
+
+    <script>
+        const questions = [
+            {
+                question: "在陌生人面前讲话时，你会感到紧张吗？",
+                options: ["完全不紧张", "有点紧张", "比较紧张", "非常紧张"]
+            },
+            {
+                question: "当你在路上遇到熟人时，你会：",
+                options: ["主动大方打招呼", "假装没看见", "犹豫一下再打招呼", "躲起来等他走远"]
+            },
+            {
+                question: "参加聚会时，你通常会：",
+                options: ["主动认识新朋友", "和认识的人聊天", "默默待着", "找借口提前离开"]
+            },
+            {
+                question: "被要求在多人面前发言时，你会：",
+                options: ["很乐意分享", "有点紧张但能说", "非常紧张", "直接拒绝"]
+            },
+            {
+                question: "社交软件上有人找你聊天，你会：",
+                options: ["秒回并聊很久", "看情况回复", "拖很久才回", "选择性忽略"]
+            },
+            {
+                question: "当别人盯着你看时，你会：",
+                options: ["完全无所谓", "有点不自在", "浑身不自在", "非常不舒服"]
+            },
+            {
+                question: "点外卖或退货时给陌生人打电话，你会：",
+                options: ["轻松自如", "有点紧张", "很紧张", "能不发消息就不打"]
+            },
+            {
+                question: "在餐厅服务员面前，你会：",
+                options: ["自然点餐", "有点紧张", "紧张到说不出话", "让朋友帮忙点"]
+            },
+            {
+                question: "遇到尴尬的事，你会一直回想吗？",
+                options: ["完全不会", "偶尔会", "经常会的", "会回想很多天"]
+            },
+            {
+                question: "总体来说，你喜欢社交吗？",
+                options: ["非常喜欢", "还好", "不太喜欢", "很排斥"]
+            }
+        ];
+
+        // Each option has a score (0-3, higher = more social anxiety)
+        const scores = [
+            [0, 1, 2, 3],
+            [0, 2, 1, 3],
+            [0, 1, 2, 3],
+            [0, 1, 2, 3],
+            [0, 1, 2, 3],
+            [0, 1, 2, 3],
+            [0, 1, 2, 3],
+            [0, 1, 2, 3],
+            [0, 1, 2, 3],
+            [0, 1, 2, 3]
+        ];
+
+        const results = [
+            {
+                min: 0, max: 8,
+                title: "社交NB症",
+                subtitle: "你是社恐的克星！",
+                icon: "😎",
+                tags: ["自信满满", "社交达人", "控场能力MAX"],
+                desc: "恭喜你！你是天生的社交达人，面对任何人任何场合都能轻松应对。你的自信和魅力总是能吸引周围的人，是你朋友圈里的开心果和气氛组组长！"
+            },
+            {
+                min: 9, max: 15,
+                title: "正常社交",
+                subtitle: "你是最正常的！",
+                icon: "😊",
+                tags: ["进退有度", "自然得体", "随心所欲"],
+                desc: "你的社交能力非常正常！在熟人面前你活泼开朗，在陌生人面前也能保持礼貌得体。你懂得什么时候该说话，什么时候该倾听，是最受欢迎的社交达人！"
+            },
+            {
+                min: 16, max: 22,
+                title: "轻度社恐",
+                subtitle: "你只是有点慢热~",
+                icon: "🙈",
+                tags: ["慢热型", "熟人面前话唠", "需要适应期"],
+                desc: "你只是比较慢热而已！一开始可能会有些紧张，但熟悉之后你会发现一个超级有趣的你。给自己一点时间，你会发现社交其实没那么可怕！"
+            },
+            {
+                min: 23, max: 30,
+                title: "重度社恐",
+                subtitle: "你需要一个安全屋！",
+                icon: "🥺",
+                tags: ["独处爱好者", "线上社牛", "线下社恐"],
+                desc: "你确实是社恐本恐了！虽然线下交流对你来说很困难，但你的内心世界一定非常丰富。建议可以先从线上交流开始，慢慢突破自己的舒适区~"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let answers = [];
+        let nickname = "";
+
+        function init() {
+            loadHistory();
+        }
+
+        function startTest() {
+            nickname = document.getElementById('nickname').value.trim() || "匿名";
+            if (!nickname) {
+                alert("请输入昵称");
+                return;
+            }
+            document.getElementById('nicknameSection').style.display = 'none';
+            renderQuestions();
+            showQuestion(0);
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            questions.forEach((q, idx) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                div.id = `question-${idx}`;
+
+                let optionsHtml = q.options.map((opt, optIdx) =>
+                    `<div class="option" onclick="selectOption(${idx}, ${optIdx}, this)">${opt}</div>`
+                ).join('');
+
+                div.innerHTML = `
+                    <h3>${idx + 1}. ${q.question}</h3>
+                    <div class="options">${optionsHtml}</div>
+                    <button class="btn btn-primary" id="nextBtn-${idx}" style="margin-top: 20px;" onclick="nextQuestion(${idx})" disabled>下一题</button>
+                `;
+
+                container.appendChild(div);
+            });
+        }
+
+        function showQuestion(idx) {
+            document.querySelectorAll('.question').forEach((q, i) => {
+                q.classList.toggle('active', i === idx);
+            });
+            currentQuestion = idx;
+            updateProgress();
+        }
+
+        function selectOption(qIdx, optIdx, element) {
+            document.querySelectorAll(`#question-${qIdx} .option`).forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            answers[qIdx] = scores[qIdx][optIdx];
+            document.getElementById(`nextBtn-${qIdx}`).disabled = false;
+        }
+
+        function nextQuestion(idx) {
+            if (idx < questions.length - 1) {
+                showQuestion(idx + 1);
+            } else {
+                showResult();
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+            document.getElementById('testInfo').textContent = `${currentQuestion + 1}/${questions.length}`;
+        }
+
+        function showResult() {
+            const totalScore = answers.reduce((a, b) => a + b, 0);
+            const maxScore = questions.length * 3;
+            const percentage = Math.round((totalScore / maxScore) * 100);
+
+            let result = results.find(r => totalScore >= r.min && totalScore <= r.max);
+
+            document.getElementById('resultIcon').textContent = result.icon;
+            document.getElementById('resultTitle').textContent = result.title;
+            document.getElementById('resultSubtitle').textContent = result.subtitle;
+            document.getElementById('resultScore').textContent = percentage + '%';
+            document.getElementById('resultDesc').textContent = result.desc;
+
+            const tagsHtml = result.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+            document.getElementById('resultTags').innerHTML = tagsHtml;
+
+            document.querySelectorAll('.question').forEach(q => q.style.display = 'none');
+            document.querySelector('.progress-bar').style.display = 'none';
+            document.getElementById('resultCard').classList.add('show');
+
+            saveHistory(nickname, result.title, percentage);
+            generateImage();
+        }
+
+        function generateImage() {
+            const canvas = document.getElementById('resultCanvas');
+            const ctx = canvas.getContext('2d');
+
+            // Background gradient
+            const gradient = ctx.createLinearGradient(0, 0, 600, 800);
+            gradient.addColorStop(0, '#667eea');
+            gradient.addColorStop(1, '#764ba2');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 600, 800);
+
+            // White card
+            ctx.fillStyle = 'white';
+            roundRect(ctx, 30, 30, 540, 740, 20);
+            ctx.fill();
+
+            // Title
+            const result = results.find(r => {
+                const totalScore = answers.reduce((a, b) => a + b, 0);
+                return totalScore >= r.min && totalScore <= r.max;
+            });
+
+            ctx.fillStyle = '#8b5cf6';
+            ctx.font = 'bold 36px -apple-system, BlinkMacSystemFont, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(result.title, 300, 120);
+
+            ctx.fillStyle = '#1e293b';
+            ctx.font = '24px -apple-system, BlinkMacSystemFont, sans-serif';
+            ctx.fillText(result.subtitle, 300, 160);
+
+            // Icon
+            ctx.font = '80px sans-serif';
+            ctx.fillText(result.icon, 300, 260);
+
+            // Score
+            const totalScore = answers.reduce((a, b) => a + b, 0);
+            const maxScore = questions.length * 3;
+            const percentage = Math.round((totalScore / maxScore) * 100);
+
+            ctx.fillStyle = '#8b5cf6';
+            ctx.font = 'bold 64px -apple-system, BlinkMacSystemFont, sans-serif';
+            ctx.fillText(percentage + '%', 300, 360);
+
+            // Description
+            ctx.fillStyle = '#64748b';
+            ctx.font = '18px -apple-system, BlinkMacSystemFont, sans-serif';
+            const descLines = wrapText(ctx, result.desc, 480);
+            descLines.forEach((line, i) => {
+                ctx.fillText(line, 300, 420 + i * 26);
+            });
+
+            // Tags
+            const tagY = 520;
+            let tagX = 80;
+            ctx.font = '14px -apple-system, BlinkMacSystemFont, sans-serif';
+            result.tags.forEach(tag => {
+                const metrics = ctx.measureText(tag);
+                ctx.fillStyle = '#f5f3ff';
+                roundRect(ctx, tagX - 10, tagY - 15, metrics.width + 20, 30, 15);
+                ctx.fill();
+                ctx.fillStyle = '#8b5cf6';
+                ctx.textAlign = 'left';
+                ctx.fillText(tag, tagX, tagY + 3);
+                tagX += metrics.width + 40;
+            });
+
+            // Nickname and watermark
+            ctx.textAlign = 'center';
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = '16px -apple-system, BlinkMacSystemFont, sans-serif';
+            ctx.fillText(`测试者: ${nickname}`, 300, 700);
+            ctx.fillText('Auto Tools - 社交恐惧症测试', 300, 730);
+        }
+
+        function roundRect(ctx, x, y, width, height, radius) {
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            ctx.lineTo(x + radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+        }
+
+        function wrapText(ctx, text, maxWidth) {
+            const words = text.split('');
+            const lines = [];
+            let currentLine = '';
+
+            for (let i = 0; i < words.length; i++) {
+                const testLine = currentLine + words[i];
+                const metrics = ctx.measureText(testLine);
+                if (metrics.width > maxWidth && currentLine !== '') {
+                    lines.push(currentLine);
+                    currentLine = words[i];
+                } else {
+                    currentLine = testLine;
+                }
+            }
+            lines.push(currentLine);
+            return lines;
+        }
+
+        function downloadImage() {
+            const canvas = document.getElementById('resultCanvas');
+            const link = document.createElement('a');
+            link.download = `社恐测试_${nickname}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        function copyResult() {
+            const result = results.find(r => {
+                const totalScore = answers.reduce((a, b) => a + b, 0);
+                return totalScore >= r.min && totalScore <= r.max;
+            });
+            const totalScore = answers.reduce((a, b) => a + b, 0);
+            const maxScore = questions.length * 3;
+            const percentage = Math.round((totalScore / maxScore) * 100);
+
+            const text = `🫣 社交恐惧症测试结果
+
+昵称: ${nickname}
+结果: ${result.title}
+社恐程度: ${percentage}%
+
+${result.desc}
+
+#社交恐惧测试 #${result.title}`;
+
+            navigator.clipboard.writeText(text).then(() => {
+                alert('✅ 结果已复制到剪贴板！');
+            });
+        }
+
+        function restartTest() {
+            location.reload();
+        }
+
+        function saveHistory(nickname, result, score) {
+            const history = JSON.parse(localStorage.getItem('socialTestHistory') || '[]');
+            const today = new Date().toLocaleDateString('zh-CN');
+
+            // Check if already tested today with same nickname
+            const existing = history.find(h => h.nickname === nickname && h.date === today);
+            if (existing) {
+                existing.result = result;
+                existing.score = score;
+                existing.time = new Date().toLocaleTimeString('zh-CN');
+            } else {
+                history.unshift({
+                    nickname,
+                    result,
+                    score,
+                    date: today,
+                    time: new Date().toLocaleTimeString('zh-CN')
+                });
+            }
+
+            localStorage.setItem('socialTestHistory', JSON.stringify(history.slice(0, 10)));
+        }
+
+        function loadHistory() {
+            const history = JSON.parse(localStorage.getItem('socialTestHistory') || '[]');
+            const container = document.getElementById('historyList');
+
+            if (history.length === 0) {
+                container.innerHTML = '<div class="history-item" style="text-align: center;">暂无测试记录</div>';
+                return;
+            }
+
+            container.innerHTML = history.map(h => `
+                <div class="history-item">
+                    <strong>${h.nickname}</strong> - ${h.result} (${h.score}%)
+                    <br><small>${h.date} ${h.time}</small>
+                </div>
+            `).join('');
+        }
+
+        init();
+    </script>
+</body>
+</html>
