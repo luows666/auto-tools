@@ -83,19 +83,16 @@
 - AI运动健身系统：从训练计划到营养指导的完整健身流程
 
 #### 3. 状态
-- Agent Visualizer: ✅ 已推送并部署
+- Agent Visualizer: ✅ 已提交（等待网络推送）
 - GitHub: https://github.com/luows666/agent-visualizer
 - Agent 角色总数: 600+ 个
-- 预设模板总数: 350+ 个
+- 预设模板总数: 356+ 个
 - 在线地址: https://luows666.github.io/agent-visualizer/
 
 ---
 
 ## Next Action
 **继续迭代 Agent Visualizer**
-- 更多预设模板
-- 优化协作体验
-- 添加更多 Agent 角色
 - 更多预设模板
 - 优化协作体验
 - 添加更多 Agent 角色
@@ -161,7 +158,7 @@
 - AI媒体娱乐系统：从内容创作到流媒体分发的完整流程
 
 #### 3. 状态
-- Agent Visualizer: ✅ 已推送并部署
+- Agent Visualizer: ✅ 已提交（等待网络推送）
 - GitHub: https://github.com/luows666/agent-visualizer
 - Agent 角色总数: 540+ 个
 - 预设模板总数: 338+ 个
@@ -250,10 +247,10 @@
 - AI金融投资系统：从投资分析到资产管理的完整金融流程
 
 #### 3. 状态
-- Agent Visualizer: ✅ 已推送并部署
+- Agent Visualizer: ✅ 已提交（等待网络推送）
 - GitHub: https://github.com/luows666/agent-visualizer
 - Agent 角色总数: 600+ 个
-- 预设模板总数: 350+ 个
+- 预设模板总数: 356+ 个
 - 在线地址: https://luows666.github.io/agent-visualizer/
 
 ---
