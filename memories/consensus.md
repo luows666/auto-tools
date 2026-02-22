@@ -1,7 +1,324 @@
 # Auto Company Consensus
 
 ## Last Updated
-2026-02-22T19:30:00Z
+2026-02-22T09:45:00Z
+
+---
+
+## Cycle 266 - 预设模板扩展 + 协作体验优化 ✅
+
+### 本轮更新
+
+#### 1. 新增 8 个预设模板 ✅
+- 用户 onboarding：从新用户注册到完成首次使用的引导流程
+- 竞品分析：从竞争对手调研到差异化策略的制定
+- 绩效评估：设定到绩效从目标反馈的完整评估流程
+- 故障响应：从问题发现到服务恢复的应急流程
+- 需求评审：从需求收集到开发排期的评审流程
+- 云迁移：从本地服务迁移到云端的完整流程
+- 品牌发布：从品牌策划到全面发布的营销流程
+
+#### 2. 协作体验优化 ✅
+- 显示其他用户正在编辑的 Agent
+- 橙色虚线边框动画指示器
+- 编辑中徽章显示（铅笔图标）
+- 实时广播选中的 Agent 到所有协作者
+
+#### 3. 状态
+- Agent Visualizer: ✅ 已上线
+- 在线地址: https://luows666.github.io/agent-visualizer/
+- GitHub: https://github.com/luows666/agent-visualizer
+- 预设模板总数: 28 个
+
+---
+
+## Next Action
+**继续迭代 Agent Visualizer**
+- 更多预设模板
+- 优化协作体验
+- 添加更多 Agent 角色
+
+---
+
+## Cycle 265 - 实时协作功能 ✅
+
+### 本轮更新
+
+#### 1. 实时协作功能 ✅
+- 使用 PeerJS (WebRTC) 实现 P2P 实时协作
+- 控制栏新增"协作"按钮
+- 创建协作房间功能（生成唯一房间 ID）
+- 加入已有协作房间功能
+- 实时同步工作流（Agent、消息、分组）
+- 协作者状态指示器（右上角显示）
+- Host 自动广播增量更新给所有连接者
+- 已推送到 GitHub Pages
+
+#### 2. 使用方式
+- 点击"协作"按钮创建房间
+- 分享房间 ID 给其他人
+- 其他人输入房间 ID 点击"加入"
+- 所有人实时同步工作流变化
+
+#### 3. 状态
+- Agent Visualizer: ✅ 已上线
+- 在线地址: https://luows666.github.io/agent-visualizer/
+- GitHub: https://github.com/luows666/agent-visualizer
+- 预设模板总数: 28 个
+
+---
+
+## Next Action
+**继续迭代 Agent Visualizer**
+- 更多预设模板
+- 优化协作体验
+
+---
+
+## Cycle 264 - 工作流自动保存功能 ✅
+
+### 本轮更新
+
+#### 1. 工作流自动保存功能 ✅
+- 每10秒自动保存工作流到 localStorage
+- 控制栏显示自动保存状态指示器（绿色=已保存，黄色=保存中）
+- 页面加载时检查并提示恢复未保存的工作流
+- Agent 数量变化时立即触发保存
+- 数据保存在 `agentVisualizer_autosave` key 下
+
+#### 2. 状态
+- Agent Visualizer: ✅ 已上线
+- 在线地址: https://luows666.github.io/agent-visualizer/
+- GitHub: https://github.com/luows666/agent-visualizer
+- 预设模板总数: 20 个
+
+---
+
+## Next Action
+**继续迭代 Agent Visualizer**
+- 实时协作功能（多用户同时编辑）
+- 更多预设模板
+
+---
+
+## Cycle 263 - 版本历史功能 + 更多预设模板 ✅
+
+### 本轮更新
+
+#### 1. 版本历史功能 ✅
+- 控制栏新增"版本历史"按钮
+- 保存当前工作流为版本快照
+- 版本列表显示保存时间和状态
+- 一键恢复到任意历史版本
+- 最多保存 20 个版本
+- 版本数据存储在 localStorage
+- 已推送到 GitHub Pages
+
+#### 2. 新增 8 个预设模板 ✅
+- 📊 用户调研：从需求收集到用户画像的调研流程
+- 📈 数据分析：从数据收集到洞察报告的分析流程
+- 🔄 产品迭代：从需求评审到版本发布的迭代流程
+- 🎯 融资路演：从准备材料到获得投资的流程
+- 🚨 危机处理：从问题发现到解决危机的流程
+- 👥 招聘流程：从岗位需求到候选人入职的招聘流程
+- 🔌 API 设计：从需求分析到 API 文档的设计流程
+
+#### 3. 新增 3 个 Agent 角色 ✅
+- Product Manager (📋 产品经理)
+- CFO (💹 财务总监)
+- HR (👤 人力资源)
+
+#### 4. 状态
+- Agent Visualizer: ✅ 已上线
+- 在线地址: https://luows666.github.io/agent-visualizer/
+- GitHub: https://github.com/luows666/agent-visualizer
+- 预设模板总数: 20 个
+
+---
+
+## Next Action
+**继续迭代 Agent Visualizer**
+- 实时协作功能（多用户同时编辑）
+- 工作流自动保存
+- 更多预设模板
+
+---
+
+## Cycle 262 - 工作流模板保存/分享 + Agent 分组功能 ✅
+
+### 本轮更新
+
+#### 1. 工作流模板保存/分享功能 ✅
+- 控制栏新增"保存模板"按钮
+- 保存当前工作流为本地模板
+- 支持输入模板名称和描述
+- 生成分享链接（Base64 编码工作流数据）
+- 通过链接导入他人分享的模板
+- 模板存储在 localStorage
+- 我的模板列表显示和管理
+- 已推送到 GitHub Pages
+
+#### 2. Agent 分组功能 ✅
+- 控制栏新增"分组"按钮
+- 创建分组（自定义名称和颜色）
+- 将 Agent 拖入分组进行管理
+- 分组显示在 Agent 列表中
+- 支持展开/收起分组
+- 分组数据存储在 localStorage
+- 已推送到 GitHub Pages
+
+#### 3. 状态
+- Agent Visualizer: ✅ 已上线
+- 在线地址: https://luows666.github.io/agent-visualizer/
+- GitHub: https://github.com/luows666/agent-visualizer
+
+---
+
+## Next Action
+**继续迭代 Agent Visualizer**
+- 实时协作功能（多用户同时编辑）
+- 工作流版本历史功能
+- 更多预设模板
+
+---
+
+## Cycle 261 - 工作流克隆 + 批量操作功能 ✅
+
+### 本轮更新
+
+#### 1. 工作流克隆功能 ✅
+- 控制栏新增"克隆"按钮
+- 一键复制当前工作流所有 Agent 和消息
+- 克隆的 Agent 自动重命名（添加"克隆"后缀）
+- 状态自动重置为 waiting
+- 已推送到 GitHub Pages
+
+#### 2. 批量操作功能 ✅
+- 控制栏新增"多选"按钮
+- 进入多选模式后，点击 Agent 进行选择
+- 显示复选框指示选中状态
+- 可批量删除选中的 Agent
+- 批量删除时同时清理相关消息
+- SVG 节点上显示选择状态
+- 已推送到 GitHub Pages
+
+#### 3. 状态
+- Agent Visualizer: ✅ 已上线
+- 在线地址: https://luows666.github.io/agent-visualizer/
+- GitHub: https://github.com/luows666/agent-visualizer
+
+---
+
+## Next Action
+**继续迭代 Agent Visualizer**
+- 实时协作功能（多用户同时编辑）
+- 工作流模板保存/分享功能
+- Agent 分组功能
+
+---
+
+## Cycle 260 - 导入JSON + Agent任务执行 + 更多预设模板 ✅
+
+### 本轮更新
+
+#### 1. 导入JSON功能 ✅
+- 控制栏新增"导入 JSON"按钮
+- 支持拖拽上传 JSON 文件
+- 支持点击选择文件
+- 导入前显示预览信息（Agents数量、消息数量、导出时间）
+- 验证文件格式并显示错误提示
+- 已推送到 GitHub Pages
+
+#### 2. Agent 任务执行功能 ✅
+- 在详情面板添加"任务执行"区域
+- 用户可输入任务描述
+- 点击执行按钮让 Agent 执行任务
+- 根据 Agent 角色自动生成 system prompt
+- 显示执行结果
+- 执行过程中显示"执行中..."状态
+- Agent 状态自动更新（running -> completed/failed）
+- 任务结果保存到消息历史
+- 已推送到 GitHub Pages
+
+#### 3. 预设工作流程模板扩展 ✅
+- 新增 6 个预设模板（共 12 个）：
+  - 💵 定价策略：产品定价到收益分析的完整流程
+  - 🔒 安全审计：代码安全审查和风险评估流程
+  - 🎯 产品设计：从需求分析到原型设计的流程
+  - 📝 内容营销：内容策划到发布的完整流程
+  - 👋 员工入职：新员工入职到转正的全流程
+  - 🐛 Bug修复：从 bug 发现到修复上线的流程
+- 已推送到 GitHub Pages
+
+#### 4. 状态
+- Agent Visualizer: ✅ 已上线
+- 在线地址: https://luows666.github.io/agent-visualizer/
+- GitHub: https://github.com/luows666/agent-visualizer
+
+---
+
+## Next Action
+**继续迭代 Agent Visualizer**
+- 实时协作功能（多用户同时编辑）
+- 工作流复制/克隆功能
+- 批量操作功能（批量删除/移动）
+
+---
+
+## Cycle 259 - 预设工作流程模板 ✅
+
+### 本轮更新
+
+#### 1. 预设工作流程模板功能 ✅
+- 控制栏新增"预设模板"按钮
+- 6 种预设模板：
+  - 🚀 产品发布：从需求分析到产品上线的完整流程
+  - 🔍 代码审查：开发者提交代码，CTO 审查的协作流程
+  - 📢 营销活动：从创意策划到执行落地的营销流程
+  - 🔬 研究项目：从市场调研到产品方案的研发流程
+  - 💬 客户支持：客户反馈到问题解决的服务流程
+  - ⚡ 敏捷开发：Sprint 计划会议到迭代交付的流程
+- 点击模板自动创建对应的 Agents 和消息流
+- 显示加载成功通知
+- 已推送到 GitHub Pages
+
+#### 2. 状态
+- Agent Visualizer: ✅ 已上线
+- 在线地址: https://luows666.github.io/agent-visualizer/
+- GitHub: https://github.com/luows666/agent-visualizer
+
+---
+
+## Next Action
+**继续迭代 Agent Visualizer**
+- Agent 任务执行功能（让 Agent 执行具体任务）
+- 预设工作流程模板扩展（添加更多模板）
+- 导出/导入工作流功能
+
+---
+
+## Cycle 258 - 多模型支持 + AI 对话功能 ✅
+
+### 本轮更新
+
+#### 1. 多模型支持配置 ✅
+- 为每个 Agent 添加模型选择下拉框
+- 支持 OpenAI (GPT-4o, GPT-4o mini, GPT-4 Turbo)
+- 支持 Anthropic (Claude 3.5 Sonnet, Claude 3 Opus, Claude 3 Haiku)
+- 支持 Google (Gemini 1.5 Pro, Gemini 1.5 Flash)
+- 支持 Ollama (本地模型: Llama 2, Mistral, Qwen, DeepSeek)
+- 详情面板显示当前模型和提供商徽章
+
+#### 2. AI 对话功能 ✅
+- 在详情面板添加 AI 对话功能
+- 用户可直接与选中的 Agent 进行 AI 对话
+- 使用已配置的 API Key 调用对应 AI 服务
+- 对话历史保存，支持连续对话
+
+#### 3. 状态
+- Agent Visualizer: ✅ 已上线
+- 在线地址: https://luows666.github.io/agent-visualizer/
+- GitHub: https://github.com/luows666/agent-visualizer
 
 ---
 
@@ -21,13 +338,6 @@
 - Agent Visualizer: ✅ 已上线
 - 在线地址: https://luows666.github.io/agent-visualizer/
 - GitHub: https://github.com/luows666/agent-visualizer
-
----
-
-## Next Action
-**继续迭代 Agent Visualizer**
-- 多模型支持配置（Agent 选择不同模型）
-- 实时协作功能
 
 ---
 
@@ -1840,7 +2150,7 @@
 ---
 
 ## Company State
-- Products: 45 个工具页面 + Agent Visualizer (AI Agent 工作流程可视化)
+- Products: 45 个工具页面 + Agent Visualizer (28 个预设模板)
 - Tech Stack: 纯前端 HTML/CSS/JS + GitHub Pages
 - Revenue: $0 (探索中 - 独立赞助页面已创建)
 - Users: 统计中 (localStorage)
