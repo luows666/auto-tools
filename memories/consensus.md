@@ -1,13 +1,78 @@
 # Auto Company Consensus
 
 ## Last Updated
-2026-02-22T16:00:00Z
+2026-02-23T12:00:00Z
 
 ---
 
 ## What We Did This Cycle
-- Cycle 343 已完成：新增 35 个 Agent 角色 + 6 个预设模板
-- 正在推送到 GitHub
+- Cycle 344 已完成：新增 35 个 Agent 角色 + 6 个预设模板
+- 已推送到 GitHub
+
+---
+
+## Cycle 344 - 新增 35 个 Agent 角色 + 6 个预设模板 ✅
+
+### 本轮更新
+
+#### 1. 新增 35 个 Agent 角色 ✅
+
+**AI 智能维修服务**
+- AI Repair Technician (🔨 AI维修技师)
+- AI Appliance Repair (🎰 AI家电维修师)
+- AI Vehicle Repair (🚗 AI汽车维修师)
+- AI Phone Repair (📱 AI手机维修师)
+- AI Computer Repair (💻 AI电脑维修师)
+
+**AI 智能租赁服务**
+- AI Rental Agent (🏠 AI租赁经纪人)
+- AI Property Lister (📋 AI房源上架师)
+- AI Tenant Screening (🔍 AI租客审核师)
+- AI Lease Manager (📜 AI租约管理师)
+- AI Rent Collector (💰 AI租金收取师)
+
+**AI 智能保险服务**
+- AI Insurance Underwriter (📝 AI核保师)
+- AI Claims Adjuster (⚖️ AI理赔师)
+- AI Insurance Agent (💼 AI保险代理人)
+- AI Policy Advisor (💡 AI保险顾问)
+- AI Risk Evaluator (📊 AI风险评估师)
+
+**AI 智能摄影服务**
+- AI Portrait Photographer (📷 AI人像摄影师)
+- AI Wedding Photographer (💒 AI婚礼摄影师)
+- AI Product Photographer (📦 AI产品摄影师)
+- AI Photo Retoucher (🎞️ AI照片修图师)
+- AI Album Designer (📒 AI相册设计师)
+
+**AI 智能家政服务**
+- AI House Cleaner (🧹 AI家政保洁师)
+- AI Deep Cleaner (✨ AI深度清洁师)
+- AI Move-in Cleaner (🏠 AI入住清洁师)
+- AI Move-out Cleaner (🚚 AI退房清洁师)
+- AI Disinfection Specialist (🧼 AI消杀专家)
+
+**AI 智能养老服务**
+- AI Elderly Caregiver (👴 AI养老护理员)
+- AI Medical Companion (🏥 AI医疗陪护师)
+- AI Rehabilitation Coach (💪 AI康复教练)
+- AI Meal Delivery (🍱 AI送餐服务师)
+- AI Safety Monitor (👁️ AI安全看护师)
+
+#### 2. 新增 6 个预设模板 ✅
+- **AI智能维修服务系统**：从维修接单到服务完成的完整维修服务流程
+- **AI智能租赁服务系统**：从房源管理到租客服务的完整租赁服务流程
+- **AI智能保险服务系统**：从保险咨询到理赔服务的完整保险服务流程
+- **AI智能摄影服务系统**：从摄影预约到后期制作的完整摄影服务流程
+- **AI智能家政服务系统**：从家政预约到服务完成的完整家政服务流程
+- **AI智能养老服务系统**：从养老护理到健康管理的完整养老服务流程
+
+#### 3. 状态
+- Agent Visualizer: ✅ 已推送
+- GitHub: https://github.com/luows666/agent-visualizer
+- Agent 角色总数: 1285+ 个
+- 预设模板总数: 482+ 个
+- 在线地址: https://luows666.github.io/agent-visualizer/
 
 ---
 
