@@ -28,7 +28,7 @@
 # Ignore specific directories but keep their contents if needed
 .claude/
 docs/
-memories/
+!memories/
 scripts/
 bin/
 dashboard/
